@@ -18,23 +18,23 @@ button.danger{color:#d32f2f;border-color:#f5c6c6}
 button.success{background:#e8f5e9;color:#2e7d32;border-color:#a5d6a7}
 .sec-title{font-size:12px;font-weight:600;color:#666;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
 .chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
-.chip{display:flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;background:#e8f0fe;border:1px solid #c5d5f8;font-size:12px;color:#1a56a8}
+.chip{display:flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;background:#e8f0fe;border:1px solid #c5d5f8;font-size:12px;color:#1a56a8;cursor:grab;user-select:none}
+.chip.dragging{opacity:.4}
 .chip .del{cursor:pointer;color:#d32f2f;font-size:13px;line-height:1}
-.chip .edit-name{cursor:pointer;border-bottom:1px dashed #1a56a8}
+.chip .drag-handle{cursor:grab;color:#aaa;font-size:11px;margin-right:2px}
 .add-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
-
-/* Table */
-.scroll-top{overflow-x:auto;border-radius:12px 12px 0 0;border:1px solid #e0e0e0;border-bottom:none;background:#f0f4ff;height:12px}.scroll-top-inner{height:1px}.table-wrap{overflow-x:auto;border:1px solid #e0e0e0;border-radius:0 0 12px 12px;margin-bottom:1rem;background:#fff;max-height:65vh;overflow-y:auto}
+.scroll-top{overflow-x:auto;border-radius:12px 12px 0 0;border:1px solid #e0e0e0;border-bottom:none;background:#f0f4ff;height:12px}
+.scroll-top-inner{height:1px}
+.table-wrap{overflow-x:auto;border:1px solid #e0e0e0;border-radius:0 0 12px 12px;margin-bottom:1rem;background:#fff;max-height:65vh;overflow-y:auto}
 table{width:100%;border-collapse:collapse;font-size:14px}
-thead th{position:sticky;top:0;z-index:10;background:#f0f4ff;color:#1a56a8;font-weight:600;padding:7px 8px;text-align:center;border-bottom:2px solid #c5d5f8;white-space:nowrap;font-size:14px}
+thead th{position:sticky;top:0;z-index:10;background:#f0f4ff;color:#1a56a8;font-weight:600;padding:7px 8px;text-align:center;border-bottom:2px solid #c5d5f8;white-space:nowrap}
 thead th.col-channel{text-align:left;min-width:110px;position:sticky;top:0;left:0;z-index:20;background:#f0f4ff;border-right:2px solid #c5d5f8}
 thead th.col-total{background:#e8f0fe;position:sticky;top:0;right:0;z-index:20}
-
+thead th.dragging-col{opacity:.4}
+thead th.drag-over-col{border-left:3px solid #1a73e8}
 td{padding:5px 7px;text-align:center;border-bottom:1px solid #f0f0f0;font-size:14px;color:#333}
 td.col-channel{text-align:left;font-weight:600;white-space:nowrap;padding:5px 10px;position:sticky;left:0;z-index:5;border-right:2px solid #e0e0e0}
 td.col-total{font-weight:600;position:sticky;right:0;z-index:5}
-
-/* 交替列顏色 */
 tbody tr:nth-child(odd) td{background:#fff}
 tbody tr:nth-child(odd) td.col-channel{background:#fff}
 tbody tr:nth-child(odd) td.col-total{background:#f5f5f5}
@@ -42,14 +42,13 @@ tbody tr:nth-child(even) td{background:#f7f9ff}
 tbody tr:nth-child(even) td.col-channel{background:#f7f9ff}
 tbody tr:nth-child(even) td.col-total{background:#eef2ff}
 tbody tr:hover td{background:#fff3e0 !important}
-
+tbody tr.dragging-row td{opacity:.4}
+tbody tr.drag-over-row td{border-top:3px solid #1a73e8}
 tr.total-row td{background:#e8f0fe !important;font-weight:700;border-top:2px solid #c5d5f8;color:#1a56a8;position:sticky;bottom:0;z-index:5}
 tr.total-row td.col-channel{background:#dce8ff !important;position:sticky;left:0;bottom:0;z-index:15}
 tr.total-row td.col-total{background:#d0e0ff !important;position:sticky;right:0;bottom:0;z-index:15}
-
 input.cell{width:68px;height:28px;padding:0 4px;border:1px solid #e0e0e0;border-radius:6px;background:#fff;color:#333;font-size:14px;text-align:center}
 input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,115,232,.15)}
-
 .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
 .tab{padding:5px 12px;border-radius:20px;border:1px solid #ddd;background:#fff;font-size:13px;cursor:pointer;color:#666}
 .tab.active{background:#1a73e8;color:#fff;border-color:#1a73e8}
@@ -60,18 +59,14 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
 .copy-btn{font-size:12px;height:30px;padding:0 14px;background:#e8f0fe;color:#1a56a8;border-color:#c5d5f8}
 .history-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid #f0f0f0;font-size:13px}
 .history-row:last-child{border-bottom:none}
-.empty{color:#aaa;text-align:center;padding:2rem;font-size:13px}
+.empty{color:#aaa;text-align:center;padding:2rem;font-size:13px;line-height:2}
 .top-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
 .row-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
 .card{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:.85rem 1.1rem;margin-bottom:10px}
-@media(max-width:600px){.row-2col{grid-template-columns:1fr}}
-
-/* inline edit */
+.inline-edit-input{font-size:14px;padding:2px 6px;border:1px solid #1a73e8;border-radius:4px;width:90px}
 .editable{cursor:pointer;border-bottom:1px dashed #aaa;padding-bottom:1px}
 .editable:hover{border-bottom-color:#1a73e8;color:#1a73e8}
-.inline-edit-input{font-size:14px;padding:2px 6px;border:1px solid #1a73e8;border-radius:4px;width:90px}
-
-/* Login */
+@media(max-width:600px){.row-2col{grid-template-columns:1fr}}
 #login-view{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center}
 .login-card{background:#fff;border:1px solid #e0e0e0;border-radius:16px;padding:2.5rem 2rem;max-width:360px;width:100%}
 .login-logo{font-size:28px;font-weight:700;color:#1a73e8;margin-bottom:6px}
@@ -117,7 +112,7 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
       <div class="card">
         <div class="row-2col">
           <div>
-            <div class="sec-title">廠商（直列）<span style="font-weight:400;color:#aaa;font-size:11px;margin-left:4px">雙擊名稱可修改</span></div>
+            <div class="sec-title">廠商（直列）<span style="font-weight:400;color:#aaa;font-size:11px;margin-left:4px">雙擊改名・拖曳排序</span></div>
             <div class="chips" id="vendor-chips"></div>
             <div class="add-row">
               <input type="text" id="new-vendor" placeholder="新增廠商" style="width:130px" onkeydown="if(event.key==='Enter')addVendor()">
@@ -126,7 +121,7 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
             </div>
           </div>
           <div>
-            <div class="sec-title">通路物流（橫列）<span style="font-weight:400;color:#aaa;font-size:11px;margin-left:4px">雙擊名稱可修改</span></div>
+            <div class="sec-title">通路物流（橫列）<span style="font-weight:400;color:#aaa;font-size:11px;margin-left:4px">雙擊改名・拖曳排序</span></div>
             <div class="chips" id="channel-chips"></div>
             <div class="add-row">
               <input type="text" id="new-channel" placeholder="新增通路" style="width:130px" onkeydown="if(event.key==='Enter')addChannel()">
@@ -152,7 +147,7 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
         <button onclick="showMain()">← 返回</button>
         <span style="font-size:14px;font-weight:600" id="history-title"></span>
       </div>
-      <div id="history-list" class="table-wrap" style="background:#fff"></div>
+      <div id="history-list" class="table-wrap" style="background:#fff;border-radius:12px"></div>
     </div>
 
     <div id="manage-view" style="display:none">
@@ -160,7 +155,7 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
         <button onclick="showMain()">← 返回</button>
         <span style="font-size:14px;font-weight:600" id="manage-title"></span>
       </div>
-      <div id="manage-list" class="table-wrap" style="background:#fff"></div>
+      <div id="manage-list" class="table-wrap" style="background:#fff;border-radius:12px"></div>
       <div class="add-row" style="margin-top:10px">
         <input type="text" id="manage-input" placeholder="" style="width:200px" onkeydown="if(event.key==='Enter')manageAdd()">
         <button onclick="manageAdd()">+ 新增</button>
@@ -213,20 +208,43 @@ function showApp(){
 window.addEventListener('load',()=>{const s=localStorage.getItem('ezfun_user');if(s){currentUser=JSON.parse(s);showApp();}});
 
 // ===================== APP =====================
-const KEY_W='ezfun_warehouses',KEY_C='ezfun_channels',KEY_V='ezfun_vendors',KEY_D='ezfun_data';
+// 每間倉庫獨立儲存：
+//   ezfun_warehouses          → 倉庫清單
+//   ezfun_wh_{wh}_vendors     → 該倉庫廠商清單
+//   ezfun_wh_{wh}_channels    → 該倉庫通路清單
+//   ezfun_data_{wh}_{date}    → 出貨資料
+
+const KEY_W='ezfun_warehouses';
 let warehouses,channels,vendors,tableData,currentWH,currentDate,manageType;
 
+function whKey(type){return `ezfun_wh_${currentWH}_${type}`}
+function dataKey(){return `ezfun_data_${currentWH}_${currentDate}`}
 function ls_get(k){try{const r=localStorage.getItem(k);return r?JSON.parse(r):null}catch(e){return null}}
 function ls_set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 
 function init(){
   warehouses=ls_get(KEY_W)||['倉庫A','倉庫B','倉庫C','倉庫D','倉庫E','倉庫F','倉庫G'];
-  channels=ls_get(KEY_C)||['7-11','全家','蝦皮','momo','PChome'];
-  vendors=ls_get(KEY_V)||['廠商甲','廠商乙','廠商丙'];
   currentWH=warehouses[0];
   currentDate=new Date().toISOString().slice(0,10);
   document.getElementById('date-picker').value=currentDate;
-  renderTabs();loadData();
+  renderTabs();
+  loadWarehouseData();
+}
+
+function loadWarehouseData(){
+  vendors=ls_get(whKey('vendors'))||[];
+  channels=ls_get(whKey('channels'))||[];
+  tableData=ls_get(dataKey())||{};
+  renderChips();
+  renderTable();
+  document.getElementById('save-badge').textContent='';
+}
+
+function loadData(){
+  currentDate=document.getElementById('date-picker').value;
+  tableData=ls_get(dataKey())||{};
+  renderTable();
+  document.getElementById('save-badge').textContent='';
 }
 
 function renderTabs(){
@@ -234,68 +252,103 @@ function renderTabs(){
   el.innerHTML=warehouses.map(w=>`<div class="tab${w===currentWH?' active':''}" onclick="switchWH('${esc(w)}')">${w}</div>`).join('')
     +`<button onclick="showManage('warehouse')" style="font-size:12px;height:30px;margin-left:4px">+ 管理倉庫</button>`;
 }
+
 function switchWH(w){
   const badge=document.getElementById('save-badge');
-  if(badge.textContent==='（未儲存）'){
-    if(confirm('目前有未儲存的資料，要先儲存再切換倉庫嗎？')){saveData();}
-  }
-  currentWH=w;renderTabs();loadData();
+  if(badge.textContent==='（未儲存）'){if(confirm('目前有未儲存的資料，要先儲存再切換倉庫嗎？')){saveData();}}
+  currentWH=w;renderTabs();loadWarehouseData();
 }
-function getTodayKey(){return `${KEY_D}_${currentWH}_${currentDate}`}
 
-function loadData(){
-  currentDate=document.getElementById('date-picker').value;
-  tableData=ls_get(getTodayKey())||{};
-  renderChips();renderTable();
-  document.getElementById('save-badge').textContent='';
-}
+// ---- chip drag-to-reorder ----
+let dragSrcType=null,dragSrcIdx=null;
 
 function renderChips(){
   document.getElementById('vendor-chips').innerHTML=vendors.map((v,i)=>
-    `<div class="chip"><span class="editable" ondblclick="inlineRename('vendor',${i},this)">${v}</span><span class="del" onclick="removeVendor('${esc(v)}')">×</span></div>`
-  ).join('');
+    `<div class="chip" draggable="true"
+      ondragstart="onChipDragStart(event,'vendor',${i})"
+      ondragover="onChipDragOver(event)"
+      ondrop="onChipDrop(event,'vendor',${i})"
+      ondragend="onChipDragEnd(event)">
+      <span class="drag-handle">⠿</span>
+      <span class="editable" ondblclick="inlineRename('vendor',${i},this)">${v}</span>
+      <span class="del" onclick="removeVendor('${esc(v)}')">×</span>
+    </div>`).join('');
   document.getElementById('channel-chips').innerHTML=channels.map((c,i)=>
-    `<div class="chip"><span class="editable" ondblclick="inlineRename('channel',${i},this)">${c}</span><span class="del" onclick="removeChannel('${esc(c)}')">×</span></div>`
-  ).join('');
+    `<div class="chip" draggable="true"
+      ondragstart="onChipDragStart(event,'channel',${i})"
+      ondragover="onChipDragOver(event)"
+      ondrop="onChipDrop(event,'channel',${i})"
+      ondragend="onChipDragEnd(event)">
+      <span class="drag-handle">⠿</span>
+      <span class="editable" ondblclick="inlineRename('channel',${i},this)">${c}</span>
+      <span class="del" onclick="removeChannel('${esc(c)}')">×</span>
+    </div>`).join('');
 }
+
+function onChipDragStart(e,type,idx){dragSrcType=type;dragSrcIdx=idx;e.currentTarget.classList.add('dragging');e.dataTransfer.effectAllowed='move';}
+function onChipDragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';}
+function onChipDrop(e,type,toIdx){
+  e.preventDefault();
+  if(dragSrcType!==type||dragSrcIdx===toIdx)return;
+  const arr=type==='vendor'?vendors:channels;
+  const item=arr.splice(dragSrcIdx,1)[0];arr.splice(toIdx,0,item);
+  ls_set(whKey(type==='vendor'?'vendors':'channels'),arr);
+  renderChips();renderTable();
+}
+function onChipDragEnd(e){e.currentTarget.classList.remove('dragging');}
 
 // ---- inline rename ----
 function inlineRename(type,idx,el){
   const arr=type==='vendor'?vendors:channels;
   const oldVal=arr[idx];
   const input=document.createElement('input');
-  input.className='inline-edit-input';
-  input.value=oldVal;
-  el.replaceWith(input);
-  input.focus();input.select();
+  input.className='inline-edit-input';input.value=oldVal;
+  el.replaceWith(input);input.focus();input.select();
   function commit(){
     const newVal=input.value.trim();
     if(newVal&&newVal!==oldVal){
-      // rename in tableData
       if(type==='vendor'&&tableData[oldVal]){tableData[newVal]=tableData[oldVal];delete tableData[oldVal];}
       arr[idx]=newVal;
-      ls_set(type==='vendor'?KEY_V:KEY_C,arr);
+      ls_set(whKey(type==='vendor'?'vendors':'channels'),arr);
     }
     renderChips();renderTable();
   }
   input.addEventListener('blur',commit);
-  input.addEventListener('keydown',e=>{if(e.key==='Enter')commit();if(e.key==='Escape'){renderChips();renderTable();}});
+  input.addEventListener('keydown',e=>{if(e.key==='Enter')input.blur();if(e.key==='Escape'){renderChips();renderTable();}});
 }
+
+// ---- table with row/col drag ----
+let dragRowIdx=null,dragColIdx=null;
 
 function renderTable(){
   const wrap=document.getElementById('table-wrap');
-  if(!channels.length||!vendors.length){wrap.innerHTML='<div class="empty">請先新增廠商和通路</div>';return}
+  if(!channels.length||!vendors.length){
+    wrap.innerHTML='<div class="empty">請先新增廠商和通路<br><span style="font-size:12px;color:#bbb">每間倉庫可設定不同的廠商與通路</span></div>';
+    syncScrollTop();return;
+  }
   let html=`<table><thead><tr><th class="col-channel">通路 \\ 廠商</th>`;
-  vendors.forEach(v=>html+=`<th>${v}</th>`);
+  vendors.forEach((v,vi)=>html+=`<th draggable="true"
+    ondragstart="onColDragStart(event,${vi})"
+    ondragover="onColDragOver(event,${vi})"
+    ondrop="onColDrop(event,${vi})"
+    ondragend="onColDragEnd()"
+    style="cursor:grab" title="拖曳調整廠商順序">${v}</th>`);
   html+=`<th class="col-total">小計</th></tr></thead><tbody>`;
   let rowTotals=vendors.map(()=>0),grand=0;
-  channels.forEach(c=>{
-    html+=`<tr><td class="col-channel">${c}</td>`;
+  channels.forEach((c,ci)=>{
+    html+=`<tr draggable="true"
+      ondragstart="onRowDragStart(event,${ci})"
+      ondragover="onRowDragOver(event,${ci})"
+      ondrop="onRowDrop(event,${ci})"
+      ondragend="onRowDragEnd()">
+      <td class="col-channel" style="cursor:grab" title="拖曳調整通路順序">${c}</td>`;
     let colTotal=0;
     vendors.forEach((v,vi)=>{
       const val=parseInt((tableData[v]&&tableData[v][c])||0)||0;
       colTotal+=val;rowTotals[vi]+=val;
-      html+=`<td><input class="cell" type="number" min="0" value="${val||''}" placeholder="0" oninput="updateCell('${esc(v)}','${esc(c)}',this.value)"></td>`;
+      html+=`<td><input class="cell" type="number" min="0" value="${val||''}" placeholder="0"
+        oninput="updateCell('${esc(v)}','${esc(c)}',this.value)"
+        ondragstart="event.stopPropagation()"></td>`;
     });
     grand+=colTotal;
     html+=`<td class="col-total">${colTotal||'—'}</td></tr>`;
@@ -304,28 +357,72 @@ function renderTable(){
   rowTotals.forEach(t=>html+=`<td>${t||'—'}</td>`);
   html+=`<td class="col-total">${grand||'—'}</td></tr></tbody></table>`;
   wrap.innerHTML=html;
-  // 同步上方捲軸
+  syncScrollTop();
+}
+
+function syncScrollTop(){
   setTimeout(()=>{
-    const st=document.getElementById('scroll-top');
-    const tw=document.getElementById('table-wrap');
-    if(st&&tw){
-      const inner=st.querySelector('.scroll-top-inner');
-      if(inner)inner.style.width=tw.scrollWidth+'px';
-      st.onscroll=()=>{tw.scrollLeft=st.scrollLeft};
-      tw.onscroll=()=>{st.scrollLeft=tw.scrollLeft};
-    }
+    const st=document.getElementById('scroll-top'),tw=document.getElementById('table-wrap');
+    if(!st||!tw)return;
+    const inner=st.querySelector('.scroll-top-inner');
+    if(inner)inner.style.width=tw.scrollWidth+'px';
+    st.onscroll=()=>{tw.scrollLeft=st.scrollLeft};
+    tw.onscroll=()=>{st.scrollLeft=tw.scrollLeft};
   },50);
 }
 
+// row drag
+function onRowDragStart(e,idx){dragRowIdx=idx;e.currentTarget.classList.add('dragging-row');e.dataTransfer.effectAllowed='move';}
+function onRowDragOver(e,idx){e.preventDefault();document.querySelectorAll('#table-wrap tbody tr:not(.total-row)').forEach((r,i)=>r.classList.toggle('drag-over-row',i===idx&&idx!==dragRowIdx));}
+function onRowDrop(e,toIdx){
+  e.preventDefault();if(dragRowIdx===null||dragRowIdx===toIdx)return;
+  const item=channels.splice(dragRowIdx,1)[0];channels.splice(toIdx,0,item);
+  ls_set(whKey('channels'),channels);renderChips();renderTable();
+}
+function onRowDragEnd(){dragRowIdx=null;document.querySelectorAll('#table-wrap tbody tr').forEach(r=>r.classList.remove('dragging-row','drag-over-row'));}
+
+// col drag
+function onColDragStart(e,idx){dragColIdx=idx;e.currentTarget.classList.add('dragging-col');e.dataTransfer.effectAllowed='move';}
+function onColDragOver(e,idx){e.preventDefault();document.querySelectorAll('#table-wrap thead th').forEach((th,i)=>th.classList.toggle('drag-over-col',i===idx+1&&idx!==dragColIdx));}
+function onColDrop(e,toIdx){
+  e.preventDefault();if(dragColIdx===null||dragColIdx===toIdx)return;
+  const item=vendors.splice(dragColIdx,1)[0];vendors.splice(toIdx,0,item);
+  ls_set(whKey('vendors'),vendors);renderChips();renderTable();
+}
+function onColDragEnd(){dragColIdx=null;document.querySelectorAll('#table-wrap thead th').forEach(th=>th.classList.remove('dragging-col','drag-over-col'));}
+
 function esc(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
-function updateCell(v,c,val){if(!tableData[v])tableData[v]={};tableData[v][c]=parseInt(val)||0;renderTable();document.getElementById('save-badge').textContent='（未儲存）';}
 
-function addChannel(){const el=document.getElementById('new-channel'),v=el.value.trim();if(v&&!channels.includes(v)){channels.push(v);ls_set(KEY_C,channels);el.value='';renderChips();renderTable()}}
-function addVendor(){const el=document.getElementById('new-vendor'),v=el.value.trim();if(v&&!vendors.includes(v)){vendors.push(v);ls_set(KEY_V,vendors);el.value='';renderChips();renderTable()}}
-function removeChannel(c){if(confirm(`確定刪除通路「${c}」？`)){channels=channels.filter(x=>x!==c);ls_set(KEY_C,channels);renderChips();renderTable()}}
-function removeVendor(v){if(confirm(`確定刪除廠商「${v}」？`)){vendors=vendors.filter(x=>x!==v);ls_set(KEY_V,vendors);renderChips();renderTable()}}
+function updateCell(v,c,val){
+  if(!tableData[v])tableData[v]={};
+  tableData[v][c]=parseInt(val)||0;
+  recomputeTotals();
+  document.getElementById('save-badge').textContent='（未儲存）';
+}
+function recomputeTotals(){
+  const rows=document.querySelectorAll('#table-wrap tbody tr:not(.total-row)');
+  let rowTotals=vendors.map(()=>0),grand=0;
+  channels.forEach((c,ci)=>{
+    let colTotal=0;
+    vendors.forEach((v,vi)=>{const val=parseInt((tableData[v]&&tableData[v][c])||0)||0;colTotal+=val;rowTotals[vi]+=val;});
+    grand+=colTotal;
+    const tc=rows[ci]?rows[ci].querySelector('td.col-total'):null;
+    if(tc)tc.textContent=colTotal||'—';
+  });
+  const tr=document.querySelector('#table-wrap tr.total-row');
+  if(tr){
+    const tds=tr.querySelectorAll('td:not(.col-channel):not(.col-total)');
+    rowTotals.forEach((t,i)=>{if(tds[i])tds[i].textContent=t||'—';});
+    const gtd=tr.querySelector('td.col-total');if(gtd)gtd.textContent=grand||'—';
+  }
+}
 
-function saveData(){ls_set(getTodayKey(),tableData);const b=document.getElementById('save-badge');b.textContent='已儲存 ✓';setTimeout(()=>b.textContent='',2500);}
+function addChannel(){const el=document.getElementById('new-channel'),v=el.value.trim();if(v&&!channels.includes(v)){channels.push(v);ls_set(whKey('channels'),channels);el.value='';renderChips();renderTable();}}
+function addVendor(){const el=document.getElementById('new-vendor'),v=el.value.trim();if(v&&!vendors.includes(v)){vendors.push(v);ls_set(whKey('vendors'),vendors);el.value='';renderChips();renderTable();}}
+function removeChannel(c){if(confirm(`確定刪除通路「${c}」？`)){channels=channels.filter(x=>x!==c);ls_set(whKey('channels'),channels);renderChips();renderTable();}}
+function removeVendor(v){if(confirm(`確定刪除廠商「${v}」？`)){vendors=vendors.filter(x=>x!==v);ls_set(whKey('vendors'),vendors);renderChips();renderTable();}}
+
+function saveData(){ls_set(dataKey(),tableData);const b=document.getElementById('save-badge');b.textContent='已儲存 ✓';setTimeout(()=>b.textContent='',2500);}
 function clearTable(){if(confirm('確定清空今日表格？')){tableData={};renderTable();document.getElementById('save-badge').textContent='（未儲存）';}}
 function goToday(){document.getElementById('date-picker').value=new Date().toISOString().slice(0,10);loadData();}
 
@@ -362,7 +459,7 @@ function showHistory(){
   ['main-view','report-modal','manage-view'].forEach(id=>document.getElementById(id).style.display='none');
   document.getElementById('history-view').style.display='';
   document.getElementById('history-title').textContent=`${currentWH} 歷史紀錄`;
-  const prefix=`${KEY_D}_${currentWH}_`;const keys=[];
+  const prefix=`ezfun_data_${currentWH}_`;const keys=[];
   for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(prefix))keys.push(k)}
   keys.sort().reverse();
   if(!keys.length){document.getElementById('history-list').innerHTML='<div class="empty">尚無歷史紀錄</div>';return}
@@ -400,15 +497,14 @@ function manageRename(i){
   if(manageType==='vendor'&&tableData[oldName]){tableData[nn]=tableData[oldName];delete tableData[oldName];}
   arr[i]=nn;
   if(manageType==='warehouse')ls_set(KEY_W,warehouses);
-  else if(manageType==='channel')ls_set(KEY_C,channels);
-  else ls_set(KEY_V,vendors);
+  else ls_set(whKey(manageType==='channel'?'channels':'vendors'),arr);
   renderManageList();renderChips();renderTable();
 }
 function manageAdd(){
   const el=document.getElementById('manage-input'),v=el.value.trim();if(!v)return;
-  if(manageType==='warehouse'){if(!warehouses.includes(v)){warehouses.push(v);ls_set(KEY_W,warehouses)}}
-  else if(manageType==='channel'){if(!channels.includes(v)){channels.push(v);ls_set(KEY_C,channels)}}
-  else{if(!vendors.includes(v)){vendors.push(v);ls_set(KEY_V,vendors)}}
+  if(manageType==='warehouse'){if(!warehouses.includes(v)){warehouses.push(v);ls_set(KEY_W,warehouses);}}
+  else if(manageType==='channel'){if(!channels.includes(v)){channels.push(v);ls_set(whKey('channels'),channels);}}
+  else{if(!vendors.includes(v)){vendors.push(v);ls_set(whKey('vendors'),vendors);}}
   el.value='';renderManageList();
 }
 function manageDelete(i){
@@ -416,8 +512,7 @@ function manageDelete(i){
   if(!confirm(`確定刪除「${arr[i]}」？`))return;
   arr.splice(i,1);
   if(manageType==='warehouse'){ls_set(KEY_W,warehouses);if(!warehouses.includes(currentWH))currentWH=warehouses[0]||'';}
-  else if(manageType==='channel')ls_set(KEY_C,channels);
-  else ls_set(KEY_V,vendors);
+  else ls_set(whKey(manageType==='channel'?'channels':'vendors'),arr);
   renderManageList();
 }
 function showMain(){
@@ -431,7 +526,7 @@ function exportCSV(){
   let colTotals=vendors.map(()=>0),grand=0;
   channels.forEach(c=>{
     let row=c,ct=0;
-    vendors.forEach((v,i)=>{const val=parseInt((tableData[v]&&tableData[v][c])||0)||0;row+=','+val;ct+=val;colTotals[i]+=val});
+    vendors.forEach((v,i)=>{const val=parseInt((tableData[v]&&tableData[v][c])||0)||0;row+=','+val;ct+=val;colTotals[i]+=val;});
     grand+=ct;csv+=row+','+ct+'\n';
   });
   csv+='廠商合計,'+colTotals.join(',')+','+grand+'\n';
