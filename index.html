@@ -24,7 +24,7 @@ button.success{background:#e8f5e9;color:#2e7d32;border-color:#a5d6a7}
 .add-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
 
 /* Table */
-.table-wrap{overflow-x:auto;border:1px solid #e0e0e0;border-radius:12px;margin-bottom:1rem;background:#fff;max-height:70vh;overflow-y:auto}
+.scroll-top{overflow-x:auto;border-radius:12px 12px 0 0;border:1px solid #e0e0e0;border-bottom:none;background:#f0f4ff;height:12px}.scroll-top-inner{height:1px}.table-wrap{overflow-x:auto;border:1px solid #e0e0e0;border-radius:0 0 12px 12px;margin-bottom:1rem;background:#fff;max-height:65vh;overflow-y:auto}
 table{width:100%;border-collapse:collapse;font-size:14px}
 thead th{position:sticky;top:0;z-index:10;background:#f0f4ff;color:#1a56a8;font-weight:600;padding:7px 8px;text-align:center;border-bottom:2px solid #c5d5f8;white-space:nowrap;font-size:14px}
 thead th.col-channel{text-align:left;min-width:110px;position:sticky;top:0;left:0;z-index:20;background:#f0f4ff;border-right:2px solid #c5d5f8}
@@ -136,6 +136,7 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
           </div>
         </div>
       </div>
+      <div class="scroll-top" id="scroll-top"><div class="scroll-top-inner"></div></div>
       <div class="table-wrap" id="table-wrap"></div>
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem">
         <button class="primary" onclick="saveData()">儲存今日紀錄</button>
@@ -233,7 +234,13 @@ function renderTabs(){
   el.innerHTML=warehouses.map(w=>`<div class="tab${w===currentWH?' active':''}" onclick="switchWH('${esc(w)}')">${w}</div>`).join('')
     +`<button onclick="showManage('warehouse')" style="font-size:12px;height:30px;margin-left:4px">+ 管理倉庫</button>`;
 }
-function switchWH(w){currentWH=w;renderTabs();loadData()}
+function switchWH(w){
+  const badge=document.getElementById('save-badge');
+  if(badge.textContent==='（未儲存）'){
+    if(confirm('目前有未儲存的資料，要先儲存再切換倉庫嗎？')){saveData();}
+  }
+  currentWH=w;renderTabs();loadData();
+}
 function getTodayKey(){return `${KEY_D}_${currentWH}_${currentDate}`}
 
 function loadData(){
@@ -297,6 +304,17 @@ function renderTable(){
   rowTotals.forEach(t=>html+=`<td>${t||'—'}</td>`);
   html+=`<td class="col-total">${grand||'—'}</td></tr></tbody></table>`;
   wrap.innerHTML=html;
+  // 同步上方捲軸
+  setTimeout(()=>{
+    const st=document.getElementById('scroll-top');
+    const tw=document.getElementById('table-wrap');
+    if(st&&tw){
+      const inner=st.querySelector('.scroll-top-inner');
+      if(inner)inner.style.width=tw.scrollWidth+'px';
+      st.onscroll=()=>{tw.scrollLeft=st.scrollLeft};
+      tw.onscroll=()=>{st.scrollLeft=tw.scrollLeft};
+    }
+  },50);
 }
 
 function esc(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
