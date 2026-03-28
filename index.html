@@ -349,7 +349,13 @@ async function handleCredentialResponse(response){
   await showApp();
 }
 
-function parseJwt(token){return JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))}
+function parseJwt(token){
+  const base64=token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/');
+  const bin=atob(base64);
+  const bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+  return JSON.parse(new TextDecoder('utf-8').decode(bytes));
+}
 
 function signOut(){
   currentUser=null;userRole=null;
