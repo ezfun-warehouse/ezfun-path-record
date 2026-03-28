@@ -8,14 +8,15 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f5;color:#333;font-size:14px}
 .app{padding:1rem;max-width:1400px;margin:0 auto}
-h1{font-size:18px;font-weight:600;color:#1a1a1a;margin-bottom:1rem}
-select,input[type="date"],input[type="text"],input[type="number"]{height:34px;padding:0 10px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#333;font-size:14px}
+h1{font-size:18px;font-weight:600;color:#1a1a1a}
+input[type="date"],input[type="text"],input[type="number"]{height:34px;padding:0 10px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#333;font-size:14px}
 button{height:34px;padding:0 14px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#333;font-size:13px;cursor:pointer;white-space:nowrap}
 button:hover{background:#f0f0f0}
 button.primary{background:#1a73e8;color:#fff;border-color:#1a73e8}
 button.primary:hover{background:#1558b0}
 button.danger{color:#d32f2f;border-color:#f5c6c6}
 button.success{background:#e8f5e9;color:#2e7d32;border-color:#a5d6a7}
+button.warning{background:#fff8e1;color:#f57f17;border-color:#ffe082}
 .sec-title{font-size:12px;font-weight:600;color:#666;margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px}
 .chips{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:6px}
 .chip{display:flex;align-items:center;gap:3px;padding:2px 8px;border-radius:20px;background:#e8f0fe;border:1px solid #c5d5f8;font-size:12px;color:#1a56a8;cursor:grab;user-select:none}
@@ -25,7 +26,7 @@ button.success{background:#e8f5e9;color:#2e7d32;border-color:#a5d6a7}
 .add-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
 .scroll-top{overflow-x:auto;border-radius:12px 12px 0 0;border:1px solid #e0e0e0;border-bottom:none;background:#f0f4ff;height:12px}
 .scroll-top-inner{height:1px}
-.table-wrap{overflow-x:auto;border:1px solid #e0e0e0;border-radius:0 0 12px 12px;margin-bottom:1rem;background:#fff;max-height:65vh;overflow-y:auto}
+.table-wrap{overflow-x:auto;border:1px solid #e0e0e0;border-radius:0 0 12px 12px;margin-bottom:1rem;background:#fff;max-height:60vh;overflow-y:auto}
 table{width:100%;border-collapse:collapse;font-size:14px}
 thead th{position:sticky;top:0;z-index:10;background:#f0f4ff;color:#1a56a8;font-weight:600;padding:7px 8px;text-align:center;border-bottom:2px solid #c5d5f8;white-space:nowrap}
 thead th.col-channel{text-align:left;min-width:110px;position:sticky;top:0;left:0;z-index:20;background:#f0f4ff;border-right:2px solid #c5d5f8}
@@ -52,7 +53,10 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
 .tabs{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
 .tab{padding:5px 12px;border-radius:20px;border:1px solid #ddd;background:#fff;font-size:13px;cursor:pointer;color:#666}
 .tab.active{background:#1a73e8;color:#fff;border-color:#1a73e8}
+.tab.admin-tab{border-color:#f57f17;color:#f57f17}
+.tab.admin-tab.active{background:#f57f17;color:#fff}
 .saved-badge{font-size:12px;color:#2e7d32;font-weight:500}
+.syncing-badge{font-size:12px;color:#1a73e8;font-weight:500}
 .report-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:14px;font-size:13px;white-space:pre-wrap;word-break:break-all;line-height:1.8;color:#333;margin-bottom:8px;font-family:'Courier New',monospace}
 .report-section{margin-bottom:18px}
 .report-label{font-size:12px;font-weight:600;color:#666;margin-bottom:5px}
@@ -62,11 +66,27 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
 .empty{color:#aaa;text-align:center;padding:2rem;font-size:13px;line-height:2}
 .top-bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
 .row-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+.row-3col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
 .card{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:.85rem 1.1rem;margin-bottom:10px}
+.metric-card{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:1rem 1.25rem;text-align:center}
+.metric-card .label{font-size:12px;color:#888;margin-bottom:4px}
+.metric-card .value{font-size:24px;font-weight:700;color:#1a73e8}
+.metric-card .sub{font-size:11px;color:#aaa;margin-top:2px}
 .inline-edit-input{font-size:14px;padding:2px 6px;border:1px solid #1a73e8;border-radius:4px;width:90px}
 .editable{cursor:pointer;border-bottom:1px dashed #aaa;padding-bottom:1px}
 .editable:hover{border-bottom-color:#1a73e8;color:#1a73e8}
-@media(max-width:600px){.row-2col{grid-template-columns:1fr}}
+.wh-summary-card{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:1rem;margin-bottom:10px}
+.wh-summary-card h3{font-size:14px;font-weight:600;margin-bottom:8px;color:#1a56a8;display:flex;align-items:center;gap:6px}
+.wh-summary-table{width:100%;font-size:13px;border-collapse:collapse}
+.wh-summary-table th{background:#f0f4ff;color:#666;padding:5px 8px;text-align:center;border-bottom:1px solid #e0e0e0}
+.wh-summary-table th:first-child{text-align:left}
+.wh-summary-table td{padding:4px 8px;text-align:center;border-bottom:1px solid #f5f5f5}
+.wh-summary-table td:first-child{text-align:left;font-weight:500}
+.wh-summary-table tr:last-child td{border-bottom:none;font-weight:700;background:#f0f4ff;color:#1a56a8}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-admin{background:#fff3e0;color:#e65100}
+.badge-user{background:#e8f0fe;color:#1a56a8}
+@media(max-width:600px){.row-2col,.row-3col{grid-template-columns:1fr}}
 #login-view{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;text-align:center}
 .login-card{background:#fff;border:1px solid #e0e0e0;border-radius:16px;padding:2.5rem 2rem;max-width:360px;width:100%}
 .login-logo{font-size:28px;font-weight:700;color:#1a73e8;margin-bottom:6px}
@@ -76,11 +96,29 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
 .user-bar{display:flex;align-items:center;gap:8px;padding:5px 12px;background:#fff;border:1px solid #e0e0e0;border-radius:20px;font-size:13px}
 .user-avatar{width:24px;height:24px;border-radius:50%;object-fit:cover}
 .user-avatar-ph{width:24px;height:24px;border-radius:50%;background:#1a73e8;display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-weight:600}
+.chart-container{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:1rem;margin-bottom:12px}
+.chart-container h3{font-size:14px;font-weight:600;color:#333;margin-bottom:12px}
+.bar-chart{display:flex;align-items:flex-end;gap:8px;height:160px;padding-bottom:24px;position:relative;border-bottom:2px solid #e0e0e0}
+.bar-wrap{display:flex;flex-direction:column;align-items:center;flex:1;height:100%;justify-content:flex-end}
+.bar{width:100%;background:#1a73e8;border-radius:4px 4px 0 0;min-height:2px;transition:height .3s;position:relative}
+.bar:hover{background:#1558b0}
+.bar-label{font-size:10px;color:#888;margin-top:4px;text-align:center;word-break:break-all}
+.bar-val{font-size:10px;color:#1a56a8;font-weight:600;margin-bottom:2px}
+.line-chart-svg{width:100%;height:160px}
+#loading-overlay{position:fixed;inset:0;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;z-index:999;font-size:14px;color:#1a73e8;flex-direction:column;gap:8px}
+.spinner{width:32px;height:32px;border:3px solid #e0e0e0;border-top-color:#1a73e8;border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
+
+<div id="loading-overlay">
+  <div class="spinner"></div>
+  <span>載入中...</span>
+</div>
+
 <div class="app">
-  <div id="login-view">
+  <div id="login-view" style="display:none">
     <div class="login-card">
       <div class="login-logo">📦 EZFUN</div>
       <div style="font-size:15px;font-weight:600;color:#333;margin-bottom:4px">出貨通路紀錄回報</div>
@@ -94,15 +132,21 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
   </div>
 
   <div id="app-view" style="display:none">
-    <div class="top-bar">
+    <div class="top-bar" style="margin-bottom:12px">
       <h1>📦 EZFUN 出貨通路紀錄回報</h1>
-      <div style="margin-left:auto;display:flex;align-items:center;gap:8px">
+      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+        <span id="sync-status" class="syncing-badge" style="display:none">⟳ 同步中...</span>
         <div class="user-bar" id="user-bar"></div>
+        <span id="role-badge" class="badge"></span>
         <button onclick="signOut()" style="font-size:12px;color:#888">登出</button>
       </div>
     </div>
 
-    <div id="main-view">
+    <!-- view tabs -->
+    <div class="tabs" id="view-tabs" style="margin-bottom:14px"></div>
+
+    <!-- ===== 倉庫作業畫面 ===== -->
+    <div id="main-view" style="display:none">
       <div class="top-bar">
         <input type="date" id="date-picker" onchange="loadData()">
         <button onclick="goToday()" style="font-size:12px">今天</button>
@@ -137,22 +181,65 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
         <button class="primary" onclick="saveData()">儲存今日紀錄</button>
         <button onclick="clearTable()">清空表格</button>
         <button class="success" onclick="showReport()">產生 LINE 回報</button>
-        <button onclick="showHistory()" style="font-size:12px">歷史紀錄</button>
+        <button onclick="showWarehouseHistory()" style="font-size:12px">歷史紀錄</button>
         <button onclick="exportCSV()" style="font-size:12px">匯出 CSV</button>
       </div>
     </div>
 
+    <!-- ===== 主管看板 ===== -->
+    <div id="dashboard-view" style="display:none">
+      <div class="top-bar" style="margin-bottom:14px">
+        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+          <span style="font-size:13px;color:#666">查詢日期：</span>
+          <input type="date" id="dash-date" onchange="loadDashboard()">
+          <button onclick="dashToday()" style="font-size:12px">今天</button>
+          <span style="font-size:13px;color:#666;margin-left:8px">區間報表：</span>
+          <input type="date" id="dash-from" style="width:130px">
+          <span style="color:#aaa">～</span>
+          <input type="date" id="dash-to" style="width:130px">
+          <button onclick="loadRangeChart()" class="warning" style="font-size:12px">產生報表</button>
+        </div>
+      </div>
+
+      <!-- 當日彙總指標 -->
+      <div class="row-3col" id="dash-metrics"></div>
+
+      <!-- 各倉庫當日總覽 -->
+      <div id="dash-warehouses"></div>
+
+      <!-- 區間圖表 -->
+      <div id="dash-charts" style="display:none">
+        <div class="chart-container">
+          <h3>📈 各倉庫出貨趨勢（折線圖）</h3>
+          <svg id="line-chart-svg" class="line-chart-svg"></svg>
+          <div id="line-chart-legend" style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px;font-size:11px"></div>
+        </div>
+        <div class="chart-container">
+          <h3>📊 各倉庫期間總量（柱狀圖）</h3>
+          <div class="bar-chart" id="bar-chart"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== LINE 回報 ===== -->
+    <div id="report-view" style="display:none">
+      <div style="display:flex;gap:8px;margin-bottom:1rem;align-items:center">
+        <span style="font-size:14px;font-weight:600" id="report-modal-title"></span>
+      </div>
+      <div id="report-content"></div>
+    </div>
+
+    <!-- ===== 歷史紀錄 ===== -->
     <div id="history-view" style="display:none">
       <div style="display:flex;gap:8px;margin-bottom:1rem;align-items:center">
-        <button onclick="showMain()">← 返回</button>
         <span style="font-size:14px;font-weight:600" id="history-title"></span>
       </div>
       <div id="history-list" class="table-wrap" style="background:#fff;border-radius:12px"></div>
     </div>
 
+    <!-- ===== 管理 ===== -->
     <div id="manage-view" style="display:none">
       <div style="display:flex;gap:8px;margin-bottom:1rem;align-items:center">
-        <button onclick="showMain()">← 返回</button>
         <span style="font-size:14px;font-weight:600" id="manage-title"></span>
       </div>
       <div id="manage-list" class="table-wrap" style="background:#fff;border-radius:12px"></div>
@@ -162,164 +249,410 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
       </div>
     </div>
 
-    <div id="report-modal" style="display:none">
-      <div style="display:flex;gap:8px;margin-bottom:1rem;align-items:center">
-        <button onclick="showMain()">← 返回</button>
-        <span style="font-size:14px;font-weight:600" id="report-modal-title"></span>
+    <!-- ===== 帳號管理（主管專用）===== -->
+    <div id="admin-view" style="display:none">
+      <div style="margin-bottom:12px">
+        <div style="font-size:14px;font-weight:600;margin-bottom:4px">👥 帳號管理</div>
+        <div style="font-size:12px;color:#888">管理可以登入系統的 Gmail 帳號。管理員可以看到所有功能；一般用戶只能操作自己的倉庫。</div>
       </div>
-      <div id="report-content"></div>
+      <div id="admin-user-list" class="table-wrap" style="background:#fff;border-radius:12px;margin-bottom:12px"></div>
+      <div class="card">
+        <div class="sec-title">新增帳號</div>
+        <div class="add-row" style="margin-top:6px">
+          <input type="text" id="new-email" placeholder="gmail@gmail.com" style="width:220px">
+          <button onclick="adminAddUser('user')" class="primary">新增一般用戶</button>
+          <button onclick="adminAddUser('admin')" class="warning">新增管理員</button>
+        </div>
+      </div>
     </div>
+
   </div>
 </div>
 
-<script src="https://accounts.google.com/gsi/client" async defer></script>
-<script>
-const ALLOWED_DOMAINS=[];
-let currentUser=null;
+<script src="https://accounts.google.com/gsi/client" async></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, getDocs, deleteDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyA6CjFQkC9PJmcuGNH2cuwLcCaNE3-Odds",
+  authDomain: "ezfun-f401a.firebaseapp.com",
+  projectId: "ezfun-f401a",
+  storageBucket: "ezfun-f401a.firebasestorage.app",
+  messagingSenderId: "921751795628",
+  appId: "1:921751795628:web:4c7a0e0a5ca61c14da6c09"
+};
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// ===================== STATE =====================
+let currentUser=null, userRole=null;
+let warehouses=[], channels=[], vendors=[], tableData={};
+let currentWH='', currentDate='', manageType='';
+let currentView='main';
+let unsubscribeData=null;
+let dragSrcType=null, dragSrcIdx=null, dragRowIdx=null, dragColIdx=null;
+
+// ===================== FIRESTORE HELPERS =====================
+async function fsGet(path){
+  const parts=path.split('/');
+  const ref=parts.length===2?doc(db,parts[0],parts[1]):doc(db,parts[0],parts[1],parts[2],parts[3]);
+  const snap=await getDoc(ref);
+  return snap.exists()?snap.data():null;
+}
+async function fsSet(path,data){
+  const parts=path.split('/');
+  const ref=parts.length===2?doc(db,parts[0],parts[1]):doc(db,parts[0],parts[1],parts[2],parts[3]);
+  await setDoc(ref,data,{merge:true});
+}
+async function fsDelete(path){
+  const parts=path.split('/');
+  const ref=parts.length===2?doc(db,parts[0],parts[1]):doc(db,parts[0],parts[1],parts[2],parts[3]);
+  await deleteDoc(ref);
+}
+
+// ===================== AUTH =====================
 function signInWithGoogle(){
   google.accounts.id.initialize({
     client_id:'2398000752-6p9on4ko3ub419fpcigg6aqqhbkibi1j.apps.googleusercontent.com',
-    callback:handleCredentialResponse,auto_select:false
+    callback:handleCredentialResponse, auto_select:false
   });
   google.accounts.id.prompt();
 }
-function handleCredentialResponse(response){
+window.signInWithGoogle=signInWithGoogle;
+
+async function handleCredentialResponse(response){
   const payload=parseJwt(response.credential);
-  if(ALLOWED_DOMAINS.length&&!ALLOWED_DOMAINS.includes(payload.email.split('@')[1])){
-    document.getElementById('login-error').textContent='此帳號無使用權限，請洽管理員。';
-    document.getElementById('login-error').style.display='';return;
+  const email=payload.email;
+  showLoading(true);
+
+  // 檢查是否有帳號控制清單
+  const accessDoc=await fsGet('system/access');
+  if(accessDoc && accessDoc.users && Object.keys(accessDoc.users).length>0){
+    const userEntry=accessDoc.users[email.replace(/\./g,'_')];
+    if(!userEntry){
+      document.getElementById('login-error').textContent='此帳號無使用權限，請洽管理員。';
+      document.getElementById('login-error').style.display='';
+      showLoading(false);
+      return;
+    }
+    userRole=userEntry.role||'user';
+  } else {
+    // 第一次使用，自動成為管理員
+    userRole='admin';
+    const key=email.replace(/\./g,'_');
+    await fsSet('system/access',{users:{[key]:{email,role:'admin',name:payload.name}}});
   }
-  currentUser=payload;
-  localStorage.setItem('ezfun_user',JSON.stringify({name:payload.name,email:payload.email,picture:payload.picture}));
-  showApp();
+
+  currentUser={name:payload.name, email, picture:payload.picture};
+  localStorage.setItem('ezfun_user', JSON.stringify({...currentUser, role:userRole}));
+  await showApp();
 }
+
 function parseJwt(token){return JSON.parse(atob(token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/')))}
-function signOut(){currentUser=null;localStorage.removeItem('ezfun_user');document.getElementById('app-view').style.display='none';document.getElementById('login-view').style.display='flex';}
-function showApp(){
+
+function signOut(){
+  currentUser=null;userRole=null;
+  localStorage.removeItem('ezfun_user');
+  if(unsubscribeData)unsubscribeData();
+  document.getElementById('app-view').style.display='none';
+  document.getElementById('login-view').style.display='flex';
+}
+window.signOut=signOut;
+
+async function showApp(){
+  showLoading(false);
   document.getElementById('login-view').style.display='none';
   document.getElementById('app-view').style.display='';
   const u=currentUser;
   const bar=document.getElementById('user-bar');
-  if(u.picture)bar.innerHTML=`<img src="${u.picture}" class="user-avatar"> <span>${u.name}</span>`;
+  if(u.picture) bar.innerHTML=`<img src="${u.picture}" class="user-avatar"> <span>${u.name}</span>`;
   else{const ini=u.name.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase();bar.innerHTML=`<div class="user-avatar-ph">${ini}</div> <span>${u.name}</span>`;}
-  init();
+  const rb=document.getElementById('role-badge');
+  rb.textContent=userRole==='admin'?'管理員':'一般用戶';
+  rb.className='badge '+(userRole==='admin'?'badge-admin':'badge-user');
+  await init();
 }
-window.addEventListener('load',()=>{const s=localStorage.getItem('ezfun_user');if(s){currentUser=JSON.parse(s);showApp();}});
 
-// ===================== APP =====================
-// 每間倉庫獨立儲存：
-//   ezfun_warehouses          → 倉庫清單
-//   ezfun_wh_{wh}_vendors     → 該倉庫廠商清單
-//   ezfun_wh_{wh}_channels    → 該倉庫通路清單
-//   ezfun_data_{wh}_{date}    → 出貨資料
-
-const KEY_W='ezfun_warehouses';
-let warehouses,channels,vendors,tableData,currentWH,currentDate,manageType;
-
-function whKey(type){return `ezfun_wh_${currentWH}_${type}`}
-function dataKey(){return `ezfun_data_${currentWH}_${currentDate}`}
-function ls_get(k){try{const r=localStorage.getItem(k);return r?JSON.parse(r):null}catch(e){return null}}
-function ls_set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-
-function init(){
-  warehouses=ls_get(KEY_W)||['倉庫A','倉庫B','倉庫C','倉庫D','倉庫E','倉庫F','倉庫G'];
+// ===================== INIT =====================
+async function init(){
+  const whDoc=await fsGet('system/warehouses');
+  warehouses=whDoc?.list||['倉庫A','倉庫B','倉庫C','倉庫D','倉庫E','倉庫F','倉庫G'];
+  if(!whDoc) await fsSet('system/warehouses',{list:warehouses});
   currentWH=warehouses[0];
   currentDate=new Date().toISOString().slice(0,10);
   document.getElementById('date-picker').value=currentDate;
-  renderTabs();
-  loadWarehouseData();
+  document.getElementById('dash-date').value=currentDate;
+  const today=new Date().toISOString().slice(0,10);
+  const monthStart=today.slice(0,7)+'-01';
+  document.getElementById('dash-from').value=monthStart;
+  document.getElementById('dash-to').value=today;
+  renderViewTabs();
+  switchView('main');
 }
 
-function loadWarehouseData(){
-  vendors=ls_get(whKey('vendors'))||[];
-  channels=ls_get(whKey('channels'))||[];
-  tableData=ls_get(dataKey())||{};
+// ===================== VIEW TABS =====================
+function renderViewTabs(){
+  const el=document.getElementById('view-tabs');
+  let html=`<div class="tab${currentView==='main'?' active':''}" onclick="switchView('main')">📋 出貨記錄</div>`;
+  if(userRole==='admin'){
+    html+=`<div class="tab${currentView==='dashboard'?' active':''}" onclick="switchView('dashboard')">📊 主管看板</div>`;
+    html+=`<div class="tab admin-tab${currentView==='admin'?' active':''}" onclick="switchView('admin')">👥 帳號管理</div>`;
+  }
+  el.innerHTML=html;
+}
+window.switchView=async function(view){
+  currentView=view;
+  renderViewTabs();
+  ['main-view','dashboard-view','report-view','history-view','manage-view','admin-view'].forEach(id=>document.getElementById(id).style.display='none');
+  if(view==='main'){document.getElementById('main-view').style.display='';renderTabs();await loadWarehouseData();}
+  else if(view==='dashboard'){document.getElementById('dashboard-view').style.display='';await loadDashboard();}
+  else if(view==='admin'){document.getElementById('admin-view').style.display='';await loadAdminUsers();}
+};
+
+// ===================== WAREHOUSE DATA =====================
+async function loadWarehouseData(){
+  if(unsubscribeData){unsubscribeData();unsubscribeData=null;}
+  const whMeta=await fsGet(`warehouses/${currentWH}/meta/config`);
+  vendors=whMeta?.vendors||[];
+  channels=whMeta?.channels||[];
   renderChips();
-  renderTable();
-  document.getElementById('save-badge').textContent='';
+  // 即時監聽當天資料
+  subscribeToData();
 }
 
-function loadData(){
+function subscribeToData(){
+  if(unsubscribeData){unsubscribeData();unsubscribeData=null;}
+  const ref=doc(db,'warehouses',currentWH,'data',currentDate);
+  unsubscribeData=onSnapshot(ref,snap=>{
+    tableData=snap.exists()?snap.data():{};
+    renderTable();
+    document.getElementById('save-badge').textContent='';
+  });
+}
+
+async function loadData(){
   currentDate=document.getElementById('date-picker').value;
-  tableData=ls_get(dataKey())||{};
-  renderTable();
-  document.getElementById('save-badge').textContent='';
+  subscribeToData();
+}
+window.loadData=loadData;
+
+async function saveData(){
+  showSync(true);
+  await fsSet(`warehouses/${currentWH}/data/${currentDate}`,tableData);
+  showSync(false);
+  const b=document.getElementById('save-badge');
+  b.textContent='已儲存 ✓';setTimeout(()=>b.textContent='',2500);
+}
+window.saveData=saveData;
+
+async function saveWarehouseMeta(){
+  await fsSet(`warehouses/${currentWH}/meta/config`,{vendors,channels});
 }
 
-function renderTabs(){
-  const el=document.getElementById('warehouse-tabs');
-  el.innerHTML=warehouses.map(w=>`<div class="tab${w===currentWH?' active':''}" onclick="switchWH('${esc(w)}')">${w}</div>`).join('')
-    +`<button onclick="showManage('warehouse')" style="font-size:12px;height:30px;margin-left:4px">+ 管理倉庫</button>`;
+// ===================== DASHBOARD =====================
+window.loadDashboard=async function(){
+  const date=document.getElementById('dash-date').value;
+  if(!date)return;
+  showLoading(true);
+  // 取得所有倉庫當天資料
+  let grandTotal=0, whData={};
+  for(const wh of warehouses){
+    const meta=await fsGet(`warehouses/${wh}/meta/config`);
+    const data=await fsGet(`warehouses/${wh}/data/${date}`);
+    const v=meta?.vendors||[], c=meta?.channels||[];
+    let total=0;
+    const chanTotals={};
+    v.forEach(vn=>{c.forEach(cn=>{const val=parseInt((data&&data[vn]&&data[vn][cn])||0)||0;total+=val;chanTotals[cn]=(chanTotals[cn]||0)+val;});});
+    whData[wh]={vendors:v,channels:c,data:data||{},total,chanTotals};
+    grandTotal+=total;
+  }
+  showLoading(false);
+
+  // 指標卡
+  const activeWh=warehouses.filter(w=>whData[w].total>0).length;
+  document.getElementById('dash-metrics').innerHTML=`
+    <div class="metric-card"><div class="label">全倉總處理單數</div><div class="value">${grandTotal.toLocaleString()}</div><div class="sub">${date}</div></div>
+    <div class="metric-card"><div class="label">有出貨的倉庫</div><div class="value">${activeWh}</div><div class="sub">共 ${warehouses.length} 間</div></div>
+    <div class="metric-card"><div class="label">平均每倉處理</div><div class="value">${activeWh?Math.round(grandTotal/activeWh).toLocaleString():0}</div><div class="sub">單/倉</div></div>`;
+
+  // 各倉庫明細
+  let whHtml='';
+  for(const wh of warehouses){
+    const d=whData[wh];
+    if(!d.vendors.length&&!d.channels.length){
+      whHtml+=`<div class="wh-summary-card"><h3>🏬 ${wh}</h3><div style="color:#aaa;font-size:12px">尚未設定廠商/通路</div></div>`;
+      continue;
+    }
+    let tableHtml=`<table class="wh-summary-table"><thead><tr><th>通路 \\ 廠商</th>`;
+    d.vendors.forEach(v=>tableHtml+=`<th>${v}</th>`);
+    tableHtml+=`<th>小計</th></tr></thead><tbody>`;
+    let colTotals=d.vendors.map(()=>0),grand=0;
+    d.channels.forEach(c=>{
+      tableHtml+=`<tr><td>${c}</td>`;
+      let ct=0;
+      d.vendors.forEach((v,vi)=>{const val=parseInt((d.data[v]&&d.data[v][c])||0)||0;ct+=val;colTotals[vi]+=val;tableHtml+=`<td>${val||'—'}</td>`;});
+      grand+=ct;tableHtml+=`<td>${ct||'—'}</td></tr>`;
+    });
+    tableHtml+=`<tr><td>合計</td>`;
+    colTotals.forEach(t=>tableHtml+=`<td>${t||'—'}</td>`);
+    tableHtml+=`<td>${grand||'—'}</td></tr></tbody></table>`;
+    whHtml+=`<div class="wh-summary-card"><h3>🏬 ${wh} <span style="font-size:13px;font-weight:400;color:#888">今日 ${grand.toLocaleString()} 單</span></h3>${tableHtml}</div>`;
+  }
+  document.getElementById('dash-warehouses').innerHTML=whHtml;
+};
+window.dashToday=function(){document.getElementById('dash-date').value=new Date().toISOString().slice(0,10);loadDashboard();};
+
+// ===================== RANGE CHART =====================
+window.loadRangeChart=async function(){
+  const from=document.getElementById('dash-from').value;
+  const to=document.getElementById('dash-to').value;
+  if(!from||!to)return;
+  showLoading(true);
+  // 產生日期陣列
+  const dates=[];
+  let d=new Date(from);
+  const end=new Date(to);
+  while(d<=end){dates.push(d.toISOString().slice(0,10));d.setDate(d.getDate()+1);}
+
+  // 取各倉庫各日資料
+  const whTotals={};
+  for(const wh of warehouses){
+    whTotals[wh]=[];
+    for(const date of dates){
+      const data=await fsGet(`warehouses/${wh}/data/${date}`);
+      const meta=await fsGet(`warehouses/${wh}/meta/config`);
+      const v=meta?.vendors||[];const c=meta?.channels||[];
+      let total=0;
+      v.forEach(vn=>{c.forEach(cn=>{total+=parseInt((data&&data[vn]&&data[vn][cn])||0)||0;});});
+      whTotals[wh].push(total);
+    }
+  }
+  showLoading(false);
+
+  // 柱狀圖：各倉庫期間總量
+  const whSums=warehouses.map(wh=>whTotals[wh].reduce((a,b)=>a+b,0));
+  const maxSum=Math.max(...whSums,1);
+  let barHtml='';
+  warehouses.forEach((wh,i)=>{
+    const h=Math.round((whSums[i]/maxSum)*130);
+    barHtml+=`<div class="bar-wrap"><div class="bar-val">${whSums[i].toLocaleString()}</div><div class="bar" style="height:${h}px" title="${wh}: ${whSums[i]} 單"></div><div class="bar-label">${wh}</div></div>`;
+  });
+  document.getElementById('bar-chart').innerHTML=barHtml;
+
+  // 折線圖 SVG
+  const svgW=800, svgH=140, padL=40, padR=20, padT=10, padB=25;
+  const maxVal=Math.max(...warehouses.flatMap(wh=>whTotals[wh]),1);
+  const colors=['#1a73e8','#e53935','#43a047','#fb8c00','#8e24aa','#00acc1','#f4511e'];
+  const xStep=dates.length>1?(svgW-padL-padR)/(dates.length-1):svgW-padL-padR;
+  let paths='',dots='';
+  warehouses.forEach((wh,wi)=>{
+    const pts=whTotals[wh].map((v,i)=>{
+      const x=padL+i*xStep;
+      const y=padT+(1-v/maxVal)*(svgH-padT-padB);
+      return `${x},${y}`;
+    });
+    paths+=`<polyline points="${pts.join(' ')}" fill="none" stroke="${colors[wi%colors.length]}" stroke-width="2" stroke-linejoin="round"/>`;
+    whTotals[wh].forEach((v,i)=>{
+      const x=padL+i*xStep, y=padT+(1-v/maxVal)*(svgH-padT-padB);
+      dots+=`<circle cx="${x}" cy="${y}" r="3" fill="${colors[wi%colors.length]}"><title>${wh} ${dates[i]}: ${v} 單</title></circle>`;
+    });
+  });
+  // x軸標籤（只顯示首尾和中間幾個）
+  let xLabels='';
+  const labelIdxs=[0,Math.floor(dates.length/4),Math.floor(dates.length/2),Math.floor(dates.length*3/4),dates.length-1].filter((v,i,a)=>a.indexOf(v)===i&&v<dates.length);
+  labelIdxs.forEach(i=>{const x=padL+i*xStep;xLabels+=`<text x="${x}" y="${svgH-5}" text-anchor="middle" font-size="9" fill="#888">${dates[i].slice(5)}</text>`;});
+  document.getElementById('line-chart-svg').innerHTML=`<svg viewBox="0 0 ${svgW} ${svgH}" width="100%" height="${svgH}">${paths}${dots}${xLabels}</svg>`;
+  document.getElementById('line-chart-legend').innerHTML=warehouses.map((wh,wi)=>`<span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:3px;background:${colors[wi%colors.length]};display:inline-block;border-radius:2px"></span>${wh}</span>`).join('');
+
+  document.getElementById('dash-charts').style.display='';
+};
+
+// ===================== ADMIN =====================
+async function loadAdminUsers(){
+  const accessDoc=await fsGet('system/access');
+  const users=accessDoc?.users||{};
+  const list=Object.values(users);
+  const el=document.getElementById('admin-user-list');
+  if(!list.length){el.innerHTML='<div class="empty">尚無帳號</div>';return;}
+  el.innerHTML=list.map(u=>`
+    <div class="history-row">
+      <span style="flex:1">${u.email}</span>
+      <span class="badge ${u.role==='admin'?'badge-admin':'badge-user'}" style="margin-right:8px">${u.role==='admin'?'管理員':'一般用戶'}</span>
+      <button onclick="adminToggleRole('${u.email}','${u.role}')" style="font-size:12px;height:30px" class="warning">${u.role==='admin'?'改為用戶':'改為管理員'}</button>
+      <button onclick="adminDeleteUser('${u.email}')" class="danger" style="font-size:12px;height:30px">移除</button>
+    </div>`).join('');
 }
+window.adminAddUser=async function(role){
+  const email=document.getElementById('new-email').value.trim();
+  if(!email||!email.includes('@')){alert('請輸入正確的 Gmail 地址');return;}
+  const key=email.replace(/\./g,'_');
+  await fsSet('system/access',{users:{[key]:{email,role,name:email}}});
+  document.getElementById('new-email').value='';
+  await loadAdminUsers();
+};
+window.adminToggleRole=async function(email,currentRole){
+  const newRole=currentRole==='admin'?'user':'admin';
+  const key=email.replace(/\./g,'_');
+  await fsSet('system/access',{users:{[key]:{email,role:newRole}}});
+  await loadAdminUsers();
+};
+window.adminDeleteUser=async function(email){
+  if(!confirm(`確定移除帳號 ${email}？`))return;
+  const accessDoc=await fsGet('system/access');
+  const users=accessDoc?.users||{};
+  const key=email.replace(/\./g,'_');
+  delete users[key];
+  await setDoc(doc(db,'system','access'),{users});
+  await loadAdminUsers();
+};
 
-function switchWH(w){
-  const badge=document.getElementById('save-badge');
-  if(badge.textContent==='（未儲存）'){if(confirm('目前有未儲存的資料，要先儲存再切換倉庫嗎？')){saveData();}}
-  currentWH=w;renderTabs();loadWarehouseData();
-}
-
-// ---- chip drag-to-reorder ----
-let dragSrcType=null,dragSrcIdx=null;
-
+// ===================== CHIPS & DRAG =====================
 function renderChips(){
   document.getElementById('vendor-chips').innerHTML=vendors.map((v,i)=>
-    `<div class="chip" draggable="true"
-      ondragstart="onChipDragStart(event,'vendor',${i})"
-      ondragover="onChipDragOver(event)"
-      ondrop="onChipDrop(event,'vendor',${i})"
-      ondragend="onChipDragEnd(event)">
+    `<div class="chip" draggable="true" ondragstart="onChipDragStart(event,'vendor',${i})" ondragover="onChipDragOver(event)" ondrop="onChipDrop(event,'vendor',${i})" ondragend="onChipDragEnd(event)">
       <span class="drag-handle">⠿</span>
       <span class="editable" ondblclick="inlineRename('vendor',${i},this)">${v}</span>
       <span class="del" onclick="removeVendor('${esc(v)}')">×</span>
     </div>`).join('');
   document.getElementById('channel-chips').innerHTML=channels.map((c,i)=>
-    `<div class="chip" draggable="true"
-      ondragstart="onChipDragStart(event,'channel',${i})"
-      ondragover="onChipDragOver(event)"
-      ondrop="onChipDrop(event,'channel',${i})"
-      ondragend="onChipDragEnd(event)">
+    `<div class="chip" draggable="true" ondragstart="onChipDragStart(event,'channel',${i})" ondragover="onChipDragOver(event)" ondrop="onChipDrop(event,'channel',${i})" ondragend="onChipDragEnd(event)">
       <span class="drag-handle">⠿</span>
       <span class="editable" ondblclick="inlineRename('channel',${i},this)">${c}</span>
       <span class="del" onclick="removeChannel('${esc(c)}')">×</span>
     </div>`).join('');
 }
-
-function onChipDragStart(e,type,idx){dragSrcType=type;dragSrcIdx=idx;e.currentTarget.classList.add('dragging');e.dataTransfer.effectAllowed='move';}
-function onChipDragOver(e){e.preventDefault();e.dataTransfer.dropEffect='move';}
-function onChipDrop(e,type,toIdx){
+window.onChipDragStart=function(e,type,idx){dragSrcType=type;dragSrcIdx=idx;e.currentTarget.classList.add('dragging');e.dataTransfer.effectAllowed='move';};
+window.onChipDragOver=function(e){e.preventDefault();e.dataTransfer.dropEffect='move';};
+window.onChipDrop=async function(e,type,toIdx){
   e.preventDefault();
   if(dragSrcType!==type||dragSrcIdx===toIdx)return;
   const arr=type==='vendor'?vendors:channels;
   const item=arr.splice(dragSrcIdx,1)[0];arr.splice(toIdx,0,item);
-  ls_set(whKey(type==='vendor'?'vendors':'channels'),arr);
-  renderChips();renderTable();
-}
-function onChipDragEnd(e){e.currentTarget.classList.remove('dragging');}
+  await saveWarehouseMeta();renderChips();renderTable();
+};
+window.onChipDragEnd=function(e){e.currentTarget.classList.remove('dragging');};
 
-// ---- inline rename ----
-function inlineRename(type,idx,el){
+window.inlineRename=function(type,idx,el){
   const arr=type==='vendor'?vendors:channels;
   const oldVal=arr[idx];
   const input=document.createElement('input');
   input.className='inline-edit-input';input.value=oldVal;
   el.replaceWith(input);input.focus();input.select();
-  function commit(){
+  async function commit(){
     const newVal=input.value.trim();
     if(newVal&&newVal!==oldVal){
       if(type==='vendor'&&tableData[oldVal]){tableData[newVal]=tableData[oldVal];delete tableData[oldVal];}
       arr[idx]=newVal;
-      ls_set(whKey(type==='vendor'?'vendors':'channels'),arr);
+      await saveWarehouseMeta();
     }
     renderChips();renderTable();
   }
   input.addEventListener('blur',commit);
   input.addEventListener('keydown',e=>{if(e.key==='Enter')input.blur();if(e.key==='Escape'){renderChips();renderTable();}});
-}
+};
 
-// ---- table with row/col drag ----
-let dragRowIdx=null,dragColIdx=null;
-
+// ===================== TABLE =====================
 function renderTable(){
   const wrap=document.getElementById('table-wrap');
   if(!channels.length||!vendors.length){
@@ -327,28 +660,17 @@ function renderTable(){
     syncScrollTop();return;
   }
   let html=`<table><thead><tr><th class="col-channel">通路 \\ 廠商</th>`;
-  vendors.forEach((v,vi)=>html+=`<th draggable="true"
-    ondragstart="onColDragStart(event,${vi})"
-    ondragover="onColDragOver(event,${vi})"
-    ondrop="onColDrop(event,${vi})"
-    ondragend="onColDragEnd()"
-    style="cursor:grab" title="拖曳調整廠商順序">${v}</th>`);
+  vendors.forEach((v,vi)=>html+=`<th draggable="true" ondragstart="onColDragStart(event,${vi})" ondragover="onColDragOver(event,${vi})" ondrop="onColDrop(event,${vi})" ondragend="onColDragEnd()" style="cursor:grab" title="拖曳調整廠商順序">${v}</th>`);
   html+=`<th class="col-total">小計</th></tr></thead><tbody>`;
   let rowTotals=vendors.map(()=>0),grand=0;
   channels.forEach((c,ci)=>{
-    html+=`<tr draggable="true"
-      ondragstart="onRowDragStart(event,${ci})"
-      ondragover="onRowDragOver(event,${ci})"
-      ondrop="onRowDrop(event,${ci})"
-      ondragend="onRowDragEnd()">
+    html+=`<tr draggable="true" ondragstart="onRowDragStart(event,${ci})" ondragover="onRowDragOver(event,${ci})" ondrop="onRowDrop(event,${ci})" ondragend="onRowDragEnd()">
       <td class="col-channel" style="cursor:grab" title="拖曳調整通路順序">${c}</td>`;
     let colTotal=0;
     vendors.forEach((v,vi)=>{
       const val=parseInt((tableData[v]&&tableData[v][c])||0)||0;
       colTotal+=val;rowTotals[vi]+=val;
-      html+=`<td><input class="cell" type="number" min="0" value="${val||''}" placeholder="0"
-        oninput="updateCell('${esc(v)}','${esc(c)}',this.value)"
-        ondragstart="event.stopPropagation()"></td>`;
+      html+=`<td><input class="cell" type="number" min="0" value="${val||''}" placeholder="0" oninput="updateCell('${esc(v)}','${esc(c)}',this.value)" ondragstart="event.stopPropagation()"></td>`;
     });
     grand+=colTotal;
     html+=`<td class="col-total">${colTotal||'—'}</td></tr>`;
@@ -371,34 +693,31 @@ function syncScrollTop(){
   },50);
 }
 
-// row drag
-function onRowDragStart(e,idx){dragRowIdx=idx;e.currentTarget.classList.add('dragging-row');e.dataTransfer.effectAllowed='move';}
-function onRowDragOver(e,idx){e.preventDefault();document.querySelectorAll('#table-wrap tbody tr:not(.total-row)').forEach((r,i)=>r.classList.toggle('drag-over-row',i===idx&&idx!==dragRowIdx));}
-function onRowDrop(e,toIdx){
+window.onRowDragStart=function(e,idx){dragRowIdx=idx;e.currentTarget.classList.add('dragging-row');e.dataTransfer.effectAllowed='move';};
+window.onRowDragOver=function(e,idx){e.preventDefault();document.querySelectorAll('#table-wrap tbody tr:not(.total-row)').forEach((r,i)=>r.classList.toggle('drag-over-row',i===idx&&idx!==dragRowIdx));};
+window.onRowDrop=async function(e,toIdx){
   e.preventDefault();if(dragRowIdx===null||dragRowIdx===toIdx)return;
   const item=channels.splice(dragRowIdx,1)[0];channels.splice(toIdx,0,item);
-  ls_set(whKey('channels'),channels);renderChips();renderTable();
-}
-function onRowDragEnd(){dragRowIdx=null;document.querySelectorAll('#table-wrap tbody tr').forEach(r=>r.classList.remove('dragging-row','drag-over-row'));}
-
-// col drag
-function onColDragStart(e,idx){dragColIdx=idx;e.currentTarget.classList.add('dragging-col');e.dataTransfer.effectAllowed='move';}
-function onColDragOver(e,idx){e.preventDefault();document.querySelectorAll('#table-wrap thead th').forEach((th,i)=>th.classList.toggle('drag-over-col',i===idx+1&&idx!==dragColIdx));}
-function onColDrop(e,toIdx){
+  await saveWarehouseMeta();renderChips();renderTable();
+};
+window.onRowDragEnd=function(){dragRowIdx=null;document.querySelectorAll('#table-wrap tbody tr').forEach(r=>r.classList.remove('dragging-row','drag-over-row'));};
+window.onColDragStart=function(e,idx){dragColIdx=idx;e.currentTarget.classList.add('dragging-col');e.dataTransfer.effectAllowed='move';};
+window.onColDragOver=function(e,idx){e.preventDefault();document.querySelectorAll('#table-wrap thead th').forEach((th,i)=>th.classList.toggle('drag-over-col',i===idx+1&&idx!==dragColIdx));};
+window.onColDrop=async function(e,toIdx){
   e.preventDefault();if(dragColIdx===null||dragColIdx===toIdx)return;
   const item=vendors.splice(dragColIdx,1)[0];vendors.splice(toIdx,0,item);
-  ls_set(whKey('vendors'),vendors);renderChips();renderTable();
-}
-function onColDragEnd(){dragColIdx=null;document.querySelectorAll('#table-wrap thead th').forEach(th=>th.classList.remove('dragging-col','drag-over-col'));}
+  await saveWarehouseMeta();renderChips();renderTable();
+};
+window.onColDragEnd=function(){dragColIdx=null;document.querySelectorAll('#table-wrap thead th').forEach(th=>th.classList.remove('dragging-col','drag-over-col'));};
 
 function esc(s){return s.replace(/\\/g,'\\\\').replace(/'/g,"\\'")}
 
-function updateCell(v,c,val){
+window.updateCell=function(v,c,val){
   if(!tableData[v])tableData[v]={};
   tableData[v][c]=parseInt(val)||0;
   recomputeTotals();
   document.getElementById('save-badge').textContent='（未儲存）';
-}
+};
 function recomputeTotals(){
   const rows=document.querySelectorAll('#table-wrap tbody tr:not(.total-row)');
   let rowTotals=vendors.map(()=>0),grand=0;
@@ -417,18 +736,100 @@ function recomputeTotals(){
   }
 }
 
-function addChannel(){const el=document.getElementById('new-channel'),v=el.value.trim();if(v&&!channels.includes(v)){channels.push(v);ls_set(whKey('channels'),channels);el.value='';renderChips();renderTable();}}
-function addVendor(){const el=document.getElementById('new-vendor'),v=el.value.trim();if(v&&!vendors.includes(v)){vendors.push(v);ls_set(whKey('vendors'),vendors);el.value='';renderChips();renderTable();}}
-function removeChannel(c){if(confirm(`確定刪除通路「${c}」？`)){channels=channels.filter(x=>x!==c);ls_set(whKey('channels'),channels);renderChips();renderTable();}}
-function removeVendor(v){if(confirm(`確定刪除廠商「${v}」？`)){vendors=vendors.filter(x=>x!==v);ls_set(whKey('vendors'),vendors);renderChips();renderTable();}}
+// ===================== WAREHOUSE TABS =====================
+function renderTabs(){
+  const el=document.getElementById('warehouse-tabs');
+  el.innerHTML=warehouses.map(w=>`<div class="tab${w===currentWH?' active':''}" onclick="switchWH('${esc(w)}')">${w}</div>`).join('')
+    +`<button onclick="showManage('warehouse')" style="font-size:12px;height:30px;margin-left:4px">+ 管理倉庫</button>`;
+}
+window.switchWH=async function(w){
+  const badge=document.getElementById('save-badge');
+  if(badge.textContent==='（未儲存）'){if(confirm('目前有未儲存的資料，要先儲存再切換倉庫嗎？')){await saveData();}}
+  currentWH=w;renderTabs();await loadWarehouseData();
+};
+window.addChannel=async function(){const el=document.getElementById('new-channel'),v=el.value.trim();if(v&&!channels.includes(v)){channels.push(v);await saveWarehouseMeta();el.value='';renderChips();renderTable();}};
+window.addVendor=async function(){const el=document.getElementById('new-vendor'),v=el.value.trim();if(v&&!vendors.includes(v)){vendors.push(v);await saveWarehouseMeta();el.value='';renderChips();renderTable();}};
+window.removeChannel=async function(c){if(confirm(`確定刪除通路「${c}」？`)){channels=channels.filter(x=>x!==c);await saveWarehouseMeta();renderChips();renderTable();}};
+window.removeVendor=async function(v){if(confirm(`確定刪除廠商「${v}」？`)){vendors=vendors.filter(x=>x!==v);await saveWarehouseMeta();renderChips();renderTable();}};
+window.clearTable=function(){if(confirm('確定清空今日表格？')){tableData={};renderTable();document.getElementById('save-badge').textContent='（未儲存）';}};
+window.goToday=function(){document.getElementById('date-picker').value=new Date().toISOString().slice(0,10);loadData();};
 
-function saveData(){ls_set(dataKey(),tableData);const b=document.getElementById('save-badge');b.textContent='已儲存 ✓';setTimeout(()=>b.textContent='',2500);}
-function clearTable(){if(confirm('確定清空今日表格？')){tableData={};renderTable();document.getElementById('save-badge').textContent='（未儲存）';}}
-function goToday(){document.getElementById('date-picker').value=new Date().toISOString().slice(0,10);loadData();}
+// ===================== MANAGE =====================
+window.showManage=async function(type){
+  manageType=type;
+  ['main-view','dashboard-view','report-view','history-view','admin-view'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('manage-view').style.display='';
+  document.getElementById('manage-title').textContent={warehouse:'管理倉庫',channel:'管理通路物流',vendor:'管理廠商'}[type];
+  document.getElementById('manage-input').placeholder=type==='warehouse'?'新增倉庫名稱':type==='channel'?'新增通路名稱':'新增廠商名稱';
+  renderManageList();
+};
+function renderManageList(){
+  const arr=manageType==='warehouse'?warehouses:manageType==='channel'?channels:vendors;
+  if(!arr.length){document.getElementById('manage-list').innerHTML='<div class="empty">尚無項目</div>';return;}
+  document.getElementById('manage-list').innerHTML=arr.map((item,i)=>
+    `<div class="history-row"><span style="flex:1">${item}</span><button onclick="manageRename(${i})" style="font-size:12px;height:30px">改名</button><button class="danger" onclick="manageDelete(${i})" style="font-size:12px;height:30px">刪除</button></div>`
+  ).join('');
+}
+window.manageRename=async function(i){
+  const arr=manageType==='warehouse'?warehouses:manageType==='channel'?channels:vendors;
+  const newName=prompt('請輸入新名稱：',arr[i]);
+  if(!newName||!newName.trim()||newName.trim()===arr[i])return;
+  const oldName=arr[i];const nn=newName.trim();
+  if(manageType==='vendor'&&tableData[oldName]){tableData[nn]=tableData[oldName];delete tableData[oldName];}
+  arr[i]=nn;
+  if(manageType==='warehouse'){await fsSet('system/warehouses',{list:warehouses});}
+  else await saveWarehouseMeta();
+  renderManageList();renderChips();renderTable();
+};
+window.manageAdd=async function(){
+  const el=document.getElementById('manage-input'),v=el.value.trim();if(!v)return;
+  if(manageType==='warehouse'){if(!warehouses.includes(v)){warehouses.push(v);await fsSet('system/warehouses',{list:warehouses});}}
+  else if(manageType==='channel'){if(!channels.includes(v)){channels.push(v);await saveWarehouseMeta();}}
+  else{if(!vendors.includes(v)){vendors.push(v);await saveWarehouseMeta();}}
+  el.value='';renderManageList();
+};
+window.manageDelete=async function(i){
+  const arr=manageType==='warehouse'?warehouses:manageType==='channel'?channels:vendors;
+  if(!confirm(`確定刪除「${arr[i]}」？`))return;
+  arr.splice(i,1);
+  if(manageType==='warehouse'){await fsSet('system/warehouses',{list:warehouses});if(!warehouses.includes(currentWH))currentWH=warehouses[0]||'';}
+  else await saveWarehouseMeta();
+  renderManageList();
+};
+window.showMain=async function(){await switchView('main');};
 
-function showReport(){
-  ['main-view','history-view','manage-view'].forEach(id=>document.getElementById(id).style.display='none');
-  document.getElementById('report-modal').style.display='';
+// ===================== HISTORY =====================
+window.showWarehouseHistory=async function(){
+  ['main-view','dashboard-view','report-view','manage-view','admin-view'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('history-view').style.display='';
+  document.getElementById('history-title').textContent=`${currentWH} 歷史紀錄`;
+  showLoading(true);
+  const colRef=collection(db,'warehouses',currentWH,'data');
+  const snap=await getDocs(colRef);
+  showLoading(false);
+  const docs=[];snap.forEach(d=>docs.push({id:d.id,data:d.data()}));
+  docs.sort((a,b)=>b.id.localeCompare(a.id));
+  if(!docs.length){document.getElementById('history-list').innerHTML='<div class="empty">尚無歷史紀錄</div>';return;}
+  const meta=await fsGet(`warehouses/${currentWH}/meta/config`);
+  const v=meta?.vendors||[];const c=meta?.channels||[];
+  document.getElementById('history-list').innerHTML=docs.map(d=>{
+    let total=0;v.forEach(vn=>{c.forEach(cn=>{total+=parseInt((d.data[vn]&&d.data[vn][cn])||0)||0;});});
+    return `<div class="history-row"><span style="min-width:100px;font-weight:600">${d.id}</span><span style="flex:1;color:#888">共處理 ${total.toLocaleString()} 單</span><button onclick="loadHistoryDate('${d.id}')" style="font-size:12px;height:30px">查看</button><button class="danger" onclick="deleteHistoryDate('${d.id}')" style="font-size:12px;height:30px">刪除</button></div>`;
+  }).join('');
+};
+window.loadHistoryDate=async function(date){
+  document.getElementById('date-picker').value=date;currentDate=date;await switchView('main');loadData();
+};
+window.deleteHistoryDate=async function(date){
+  if(!confirm(`確定刪除 ${date} 的紀錄？`))return;
+  await fsDelete(`warehouses/${currentWH}/data/${date}`);
+  showWarehouseHistory();
+};
+
+// ===================== LINE REPORT =====================
+window.showReport=function(){
+  ['main-view','dashboard-view','history-view','manage-view','admin-view'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById('report-view').style.display='';
   document.getElementById('report-modal-title').textContent=`LINE 回報 － ${currentWH}　${currentDate}`;
   const dateStr=currentDate.replace(/-/g,'/');let html='';
   vendors.forEach((v,vi)=>{
@@ -439,88 +840,24 @@ function showReport(){
     html+=`<div class="report-section"><div class="report-label">▶ 廠商：${v}</div><div class="report-box" id="rpt_v_${vi}">${escHtml(msg)}</div><button class="copy-btn" onclick="copyReport('rpt_v_${vi}')">複製此則</button></div>`;
   });
   let whTotal=0,whLines=[],vendorLines=[];
-  channels.forEach(c=>{let ct=0;vendors.forEach(v=>{ct+=parseInt((tableData[v]&&tableData[v][c])||0)||0});if(ct>0){whLines.push(`　📦 ${c}：${ct} 單`);whTotal+=ct;}});
-  vendors.forEach(v=>{let vt=0;channels.forEach(c=>{vt+=parseInt((tableData[v]&&tableData[v][c])||0)||0});if(vt>0)vendorLines.push(`　🏭 ${v}：${vt} 單`);});
+  channels.forEach(c=>{let ct=0;vendors.forEach(v=>{ct+=parseInt((tableData[v]&&tableData[v][c])||0)||0;});if(ct>0){whLines.push(`　📦 ${c}：${ct} 單`);whTotal+=ct;}});
+  vendors.forEach(v=>{let vt=0;channels.forEach(c=>{vt+=parseInt((tableData[v]&&tableData[v][c])||0)||0;});if(vt>0)vendorLines.push(`　🏭 ${v}：${vt} 單`);});
   const whMsg=`📊 倉庫日報｜${dateStr}\n━━━━━━━━━━━━━━\n🏬 ${currentWH} 今日出庫總覽\n\n【各通路處理單數】\n${whLines.join('\n')||'　（無出貨）'}\n\n【各廠商處理單數】\n${vendorLines.join('\n')||'　（無出貨）'}\n\n✅ 全倉今日處理單數：${whTotal} 單\n━━━━━━━━━━━━━━`;
   html+=`<div class="report-section"><div class="report-label">▶ 倉庫總報（回報給公司）</div><div class="report-box" id="rpt_wh">${escHtml(whMsg)}</div><button class="copy-btn" onclick="copyReport('rpt_wh')">複製此則</button></div>`;
   if(!html)html='<div class="empty">今日尚無出貨資料，請先填寫表格並儲存。</div>';
   document.getElementById('report-content').innerHTML=html;
-}
-function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function copyReport(id){
+};
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+window.copyReport=function(id){
   const el=document.getElementById(id);const text=el.innerText||el.textContent;
   navigator.clipboard.writeText(text).then(()=>flashCopy(id)).catch(()=>{
     const r=document.createRange();r.selectNode(el);window.getSelection().removeAllRanges();window.getSelection().addRange(r);document.execCommand('copy');window.getSelection().removeAllRanges();flashCopy(id);
   });
-}
+};
 function flashCopy(id){const btn=document.getElementById(id).nextElementSibling;btn.textContent='已複製 ✓';setTimeout(()=>btn.textContent='複製此則',2000);}
 
-function showHistory(){
-  ['main-view','report-modal','manage-view'].forEach(id=>document.getElementById(id).style.display='none');
-  document.getElementById('history-view').style.display='';
-  document.getElementById('history-title').textContent=`${currentWH} 歷史紀錄`;
-  const prefix=`ezfun_data_${currentWH}_`;const keys=[];
-  for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k&&k.startsWith(prefix))keys.push(k)}
-  keys.sort().reverse();
-  if(!keys.length){document.getElementById('history-list').innerHTML='<div class="empty">尚無歷史紀錄</div>';return}
-  let html='';
-  keys.forEach(k=>{
-    const date=k.replace(prefix,'');const d=ls_get(k);let total=0;
-    Object.values(d||{}).forEach(row=>Object.values(row||{}).forEach(v=>{total+=parseInt(v)||0}));
-    html+=`<div class="history-row"><span style="min-width:100px;font-weight:600">${date}</span><span style="flex:1;color:#888">共處理 ${total} 單</span><button onclick="loadHistoryDate('${date}')" style="font-size:12px;height:30px">查看</button><button class="danger" onclick="deleteHistory('${k}','${date}')" style="font-size:12px;height:30px">刪除</button></div>`;
-  });
-  document.getElementById('history-list').innerHTML=html;
-}
-function loadHistoryDate(date){document.getElementById('date-picker').value=date;currentDate=date;loadData();showMain();}
-function deleteHistory(k,date){if(confirm(`確定刪除 ${date} 的紀錄？`)){localStorage.removeItem(k);showHistory();}}
-
-function showManage(type){
-  manageType=type;
-  ['main-view','history-view','report-modal'].forEach(id=>document.getElementById(id).style.display='none');
-  document.getElementById('manage-view').style.display='';
-  document.getElementById('manage-title').textContent={warehouse:'管理倉庫',channel:'管理通路物流',vendor:'管理廠商'}[type];
-  document.getElementById('manage-input').placeholder=type==='warehouse'?'新增倉庫名稱':type==='channel'?'新增通路名稱':'新增廠商名稱';
-  renderManageList();
-}
-function renderManageList(){
-  const arr=manageType==='warehouse'?warehouses:manageType==='channel'?channels:vendors;
-  if(!arr.length){document.getElementById('manage-list').innerHTML='<div class="empty">尚無項目</div>';return}
-  document.getElementById('manage-list').innerHTML=arr.map((item,i)=>
-    `<div class="history-row"><span style="flex:1">${item}</span><button onclick="manageRename(${i})" style="font-size:12px;height:30px">改名</button><button class="danger" onclick="manageDelete(${i})" style="font-size:12px;height:30px">刪除</button></div>`
-  ).join('');
-}
-function manageRename(i){
-  const arr=manageType==='warehouse'?warehouses:manageType==='channel'?channels:vendors;
-  const newName=prompt('請輸入新名稱：',arr[i]);
-  if(!newName||!newName.trim()||newName.trim()===arr[i])return;
-  const oldName=arr[i];const nn=newName.trim();
-  if(manageType==='vendor'&&tableData[oldName]){tableData[nn]=tableData[oldName];delete tableData[oldName];}
-  arr[i]=nn;
-  if(manageType==='warehouse')ls_set(KEY_W,warehouses);
-  else ls_set(whKey(manageType==='channel'?'channels':'vendors'),arr);
-  renderManageList();renderChips();renderTable();
-}
-function manageAdd(){
-  const el=document.getElementById('manage-input'),v=el.value.trim();if(!v)return;
-  if(manageType==='warehouse'){if(!warehouses.includes(v)){warehouses.push(v);ls_set(KEY_W,warehouses);}}
-  else if(manageType==='channel'){if(!channels.includes(v)){channels.push(v);ls_set(whKey('channels'),channels);}}
-  else{if(!vendors.includes(v)){vendors.push(v);ls_set(whKey('vendors'),vendors);}}
-  el.value='';renderManageList();
-}
-function manageDelete(i){
-  const arr=manageType==='warehouse'?warehouses:manageType==='channel'?channels:vendors;
-  if(!confirm(`確定刪除「${arr[i]}」？`))return;
-  arr.splice(i,1);
-  if(manageType==='warehouse'){ls_set(KEY_W,warehouses);if(!warehouses.includes(currentWH))currentWH=warehouses[0]||'';}
-  else ls_set(whKey(manageType==='channel'?'channels':'vendors'),arr);
-  renderManageList();
-}
-function showMain(){
-  document.getElementById('main-view').style.display='';
-  ['history-view','manage-view','report-modal'].forEach(id=>document.getElementById(id).style.display='none');
-  renderTabs();renderChips();renderTable();
-}
-function exportCSV(){
+// ===================== CSV =====================
+window.exportCSV=function(){
   if(!channels.length||!vendors.length)return;
   let csv='通路,'+vendors.join(',')+',小計\n';
   let colTotals=vendors.map(()=>0),grand=0;
@@ -533,7 +870,24 @@ function exportCSV(){
   const blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
   const a=document.createElement('a');a.href=URL.createObjectURL(blob);
   a.download=`出貨記錄_${currentWH}_${currentDate}.csv`;a.click();
-}
+};
+
+// ===================== UI HELPERS =====================
+function showLoading(v){document.getElementById('loading-overlay').style.display=v?'flex':'none';}
+function showSync(v){document.getElementById('sync-status').style.display=v?'':'none';}
+
+// ===================== AUTO LOGIN =====================
+window.addEventListener('load',async()=>{
+  const s=localStorage.getItem('ezfun_user');
+  if(s){
+    currentUser=JSON.parse(s);
+    userRole=currentUser.role||'user';
+    await showApp();
+  } else {
+    showLoading(false);
+    document.getElementById('login-view').style.display='flex';
+  }
+});
 </script>
 </body>
 </html>
