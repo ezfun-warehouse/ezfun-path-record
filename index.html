@@ -58,8 +58,11 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
 .saved-badge{font-size:12px;color:#2e7d32;font-weight:500}
 .syncing-badge{font-size:12px;color:#1a73e8;font-weight:500}
 .report-box{background:#f8f9fa;border:1px solid #e0e0e0;border-radius:8px;padding:14px;font-size:13px;white-space:pre-wrap;word-break:break-all;line-height:1.8;color:#333;margin-bottom:8px;font-family:'Courier New',monospace}
-.report-section{margin-bottom:18px}
-.report-label{font-size:12px;font-weight:600;color:#666;margin-bottom:5px}
+.report-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;margin-bottom:16px}
+.report-section{background:#fff;border:1px solid #e0e0e0;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.report-section.full-width{grid-column:1/-1}
+.report-label{font-size:16px;font-weight:700;color:#1a56a8;margin-bottom:2px;letter-spacing:.3px}
+@media(max-width:720px){.report-grid{grid-template-columns:1fr}}
 .copy-btn{font-size:12px;height:30px;padding:0 14px;background:#e8f0fe;color:#1a56a8;border-color:#c5d5f8}
 .history-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid #f0f0f0;font-size:13px}
 .history-row:last-child{border-bottom:none}
@@ -888,9 +891,9 @@ window.showReport=function(){
   channels.forEach(c=>{let ct=0;vendors.forEach(v=>{ct+=parseInt((tableData[v]&&tableData[v][c])||0)||0;});if(ct>0){whLines.push(`　📦 ${c}：${ct} 單`);whTotal+=ct;}});
   vendors.forEach(v=>{let vt=0;channels.forEach(c=>{vt+=parseInt((tableData[v]&&tableData[v][c])||0)||0;});if(vt>0)vendorLines.push(`　🏭 ${v}：${vt} 單`);});
   const whMsg=`📊 倉庫日報｜${dateStr}\n━━━━━━━━━━━━━━\n🏬 ${currentWH} 今日出庫總覽\n\n【各通路處理單數】\n${whLines.join('\n')||'　（無出貨）'}\n\n【各廠商處理單數】\n${vendorLines.join('\n')||'　（無出貨）'}\n\n✅ 全倉今日處理單數：${whTotal} 單\n━━━━━━━━━━━━━━`;
-  html+=`<div class="report-section"><div class="report-label">▶ 倉庫總報（回報給公司）</div><div class="report-box" id="rpt_wh"></div><button class="copy-btn" onclick="copyReport('rpt_wh')">複製此則</button></div>`;
-  if(!html)html='<div class="empty">今日尚無出貨資料，請先填寫表格並儲存。</div>';
-  document.getElementById('report-content').innerHTML=html;
+  const whSection=`<div class="report-section full-width" style="margin-top:4px"><div class="report-label" style="color:#e65100">🏬 倉庫總報（回報給公司）</div><div class="report-box" id="rpt_wh"></div><button class="copy-btn" onclick="copyReport('rpt_wh')" style="background:#fff3e0;color:#e65100;border-color:#ffcc80">複製此則</button></div>`;
+  const vendorHtml = html ? `<div class="report-grid">${html}</div>` : '<div class="empty">今日尚無出貨資料，請先填寫表格並儲存。</div>';
+  document.getElementById('report-content').innerHTML=vendorHtml+whSection;
   // 初始化每個廠商的報表內容
   const dateStr2=currentDate.replace(/-/g,'/');
   let vi2=0;
