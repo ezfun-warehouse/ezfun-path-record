@@ -64,6 +64,11 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
 .report-label{font-size:16px;font-weight:700;color:#1a56a8;margin-bottom:2px;letter-spacing:.3px}
 @media(max-width:720px){.report-grid{grid-template-columns:1fr}}
 .copy-btn{font-size:12px;height:30px;padding:0 14px;background:#e8f0fe;color:#1a56a8;border-color:#c5d5f8}
+.report-section.done{opacity:.38;pointer-events:none;filter:grayscale(30%)}
+.report-section.done .report-label::after{content:' ✓ 已回報';font-size:12px;color:#2e7d32;font-weight:400;margin-left:6px}
+.done-check{display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px;color:#555;user-select:none;padding:4px 0}
+.done-check input{width:16px;height:16px;cursor:pointer;accent-color:#2e7d32}
+.done-check.checked{color:#2e7d32;font-weight:500}
 .history-row{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid #f0f0f0;font-size:13px}
 .history-row:last-child{border-bottom:none}
 .empty{color:#aaa;text-align:center;padding:2rem;font-size:13px;line-height:2}
@@ -877,8 +882,14 @@ window.showReport=function(){
     const row=tableData[v]||{};let total=0;const lines=[];
     channels.forEach(c=>{const val=parseInt(row[c])||0;if(val>0){lines.push(`　📦 ${c}：${val} 單`);total+=val;}});
     if(total===0)return;
-    html+=`<div class="report-section">
-      <div class="report-label">▶ 廠商：${v}</div>
+    html+=`<div class="report-section" id="sec_v_${vi}">
+      <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
+        <div class="report-label">▶ 廠商：${v}</div>
+        <label class="done-check" id="chk_label_${vi}">
+          <input type="checkbox" id="chk_v_${vi}" onchange="toggleDone(${vi},'${esc(v)}',this.checked)">
+          回報完成
+        </label>
+      </div>
       <div style="margin-bottom:6px">
         <div style="font-size:11px;color:#888;margin-bottom:4px">📝 附註（選填，會帶入回報訊息）</div>
         <textarea id="note_v_${vi}" rows="2" placeholder="輸入備註細節，例如：部分貨品延誤，預計明日補出..." oninput="refreshVendorReport(${vi})" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;resize:vertical;font-family:inherit;color:#333;background:#fff;line-height:1.5"></textarea>
@@ -891,7 +902,17 @@ window.showReport=function(){
   channels.forEach(c=>{let ct=0;vendors.forEach(v=>{ct+=parseInt((tableData[v]&&tableData[v][c])||0)||0;});if(ct>0){whLines.push(`　📦 ${c}：${ct} 單`);whTotal+=ct;}});
   vendors.forEach(v=>{let vt=0;channels.forEach(c=>{vt+=parseInt((tableData[v]&&tableData[v][c])||0)||0;});if(vt>0)vendorLines.push(`　🏭 ${v}：${vt} 單`);});
   const whMsg=`📊 倉庫日報｜${dateStr}\n━━━━━━━━━━━━━━\n🏬 ${currentWH} 今日出庫總覽\n\n【各通路處理單數】\n${whLines.join('\n')||'　（無出貨）'}\n\n【各廠商處理單數】\n${vendorLines.join('\n')||'　（無出貨）'}\n\n✅ 全倉今日處理單數：${whTotal} 單\n━━━━━━━━━━━━━━`;
-  const whSection=`<div class="report-section full-width" style="margin-top:4px"><div class="report-label" style="color:#e65100">🏬 倉庫總報（回報給公司）</div><div class="report-box" id="rpt_wh"></div><button class="copy-btn" onclick="copyReport('rpt_wh')" style="background:#fff3e0;color:#e65100;border-color:#ffcc80">複製此則</button></div>`;
+  const whSection=`<div class="report-section full-width" id="sec_wh" style="margin-top:4px">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px">
+      <div class="report-label" style="color:#e65100">🏬 倉庫總報（回報給公司）</div>
+      <label class="done-check" id="chk_label_wh">
+        <input type="checkbox" id="chk_wh" onchange="toggleDone(-1,'__wh__',this.checked)">
+        回報完成
+      </label>
+    </div>
+    <div class="report-box" id="rpt_wh"></div>
+    <button class="copy-btn" onclick="copyReport('rpt_wh')" style="background:#fff3e0;color:#e65100;border-color:#ffcc80">複製此則</button>
+  </div>`;
   const vendorHtml = html ? `<div class="report-grid">${html}</div>` : '<div class="empty">今日尚無出貨資料，請先填寫表格並儲存。</div>';
   document.getElementById('report-content').innerHTML=vendorHtml+whSection;
   // 初始化每個廠商的報表內容（用原始 vi 對應 DOM id）
@@ -904,7 +925,44 @@ window.showReport=function(){
   });
   const whBox=document.getElementById('rpt_wh');
   if(whBox)whBox.textContent=whMsg;
+  // 訂閱即時勾選狀態
+  subscribeReportDone();
 };
+let unsubReportDone=null;
+
+function subscribeReportDone(){
+  if(unsubReportDone){unsubReportDone();unsubReportDone=null;}
+  const ref=doc(db,'warehouses',currentWH,'reportDone',currentDate);
+  unsubReportDone=onSnapshot(ref,snap=>{
+    const doneMap=snap.exists()?snap.data():{};
+    // 更新所有廠商勾選狀態
+    vendors.forEach((v,vi)=>{
+      const key='v_'+vi;
+      const isDone=!!doneMap[key];
+      const sec=document.getElementById('sec_v_'+vi);
+      const chk=document.getElementById('chk_v_'+vi);
+      const lbl=document.getElementById('chk_label_'+vi);
+      if(sec)sec.classList.toggle('done',isDone);
+      if(chk)chk.checked=isDone;
+      if(lbl)lbl.classList.toggle('checked',isDone);
+    });
+    // 倉庫總報
+    const whDone=!!doneMap['__wh__'];
+    const whSec=document.getElementById('sec_wh');
+    const whChk=document.getElementById('chk_wh');
+    const whLbl=document.getElementById('chk_label_wh');
+    if(whSec)whSec.classList.toggle('done',whDone);
+    if(whChk)whChk.checked=whDone;
+    if(whLbl)whLbl.classList.toggle('checked',whDone);
+  });
+}
+
+window.toggleDone=async function(vi,vkey,checked){
+  const ref=doc(db,'warehouses',currentWH,'reportDone',currentDate);
+  const key = vkey==='__wh__'?'__wh__':'v_'+vi;
+  await setDoc(ref,{[key]:checked},{merge:true});
+};
+
 function buildVendorMsg(vi,v,dateStr){
   const row=tableData[v]||{};let total=0;const lines=[];
   channels.forEach(c=>{const val=parseInt(row[c])||0;if(val>0){lines.push(`　📦 ${c}：${val} 單`);total+=val;}});
