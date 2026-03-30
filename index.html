@@ -109,6 +109,35 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
 .spinner{width:32px;height:32px;border:3px solid #e0e0e0;border-top-color:#1a73e8;border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
+<script>
+// Google OAuth redirect 登入處理
+const GOOGLE_CLIENT_ID = '2398000752-6p9on4ko3ub419fpcigg6aqqhbkibi1j.apps.googleusercontent.com';
+const REDIRECT_URI = window.location.origin + window.location.pathname;
+
+function signInWithGoogle() {
+  const params = new URLSearchParams({
+    client_id: GOOGLE_CLIENT_ID,
+    redirect_uri: REDIRECT_URI,
+    response_type: 'token id_token',
+    scope: 'openid email profile',
+    nonce: Math.random().toString(36).slice(2),
+    prompt: 'select_account'
+  });
+  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+}
+
+// 處理 redirect 回來後的 hash fragment
+function handleRedirectCallback() {
+  const hash = window.location.hash.substring(1);
+  if (!hash) return false;
+  const params = new URLSearchParams(hash);
+  const idToken = params.get('id_token');
+  if (!idToken) return false;
+  // 清除 URL hash 避免重複處理
+  history.replaceState(null, '', window.location.pathname);
+  return idToken;
+}
+</script>
 </head>
 <body>
 
@@ -269,7 +298,7 @@ input.cell:focus{outline:none;border-color:#1a73e8;box-shadow:0 0 0 2px rgba(26,
   </div>
 </div>
 
-<script src="https://accounts.google.com/gsi/client" async></script>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
 import { getFirestore, doc, getDoc, setDoc, onSnapshot, collection, query, getDocs, deleteDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
@@ -312,17 +341,20 @@ async function fsDelete(path){
 }
 
 // ===================== AUTH =====================
-function signInWithGoogle(){
-  google.accounts.id.initialize({
-    client_id:'2398000752-6p9on4ko3ub419fpcigg6aqqhbkibi1j.apps.googleusercontent.com',
-    callback:handleCredentialResponse, auto_select:false
+window.signInWithGoogle = function() {
+  const params = new URLSearchParams({
+    client_id: '2398000752-6p9on4ko3ub419fpcigg6aqqhbkibi1j.apps.googleusercontent.com',
+    redirect_uri: window.location.origin + window.location.pathname,
+    response_type: 'token id_token',
+    scope: 'openid email profile',
+    nonce: Math.random().toString(36).slice(2),
+    prompt: 'select_account'
   });
-  google.accounts.id.prompt();
-}
-window.signInWithGoogle=signInWithGoogle;
+  window.location.href = 'https://accounts.google.com/o/oauth2/v2/auth?' + params.toString();
+};
 
-async function handleCredentialResponse(response){
-  const payload=parseJwt(response.credential);
+async function handleCredentialResponse(idToken){
+  const payload=parseJwt(idToken);
   const email=payload.email;
   showLoading(true);
 
@@ -884,6 +916,18 @@ function showSync(v){document.getElementById('sync-status').style.display=v?'':'
 
 // ===================== AUTO LOGIN =====================
 window.addEventListener('load',async()=>{
+  // 先檢查是否從 Google OAuth redirect 回來
+  const hash = window.location.hash.substring(1);
+  if(hash){
+    const params = new URLSearchParams(hash);
+    const idToken = params.get('id_token');
+    if(idToken){
+      history.replaceState(null, '', window.location.pathname);
+      await handleCredentialResponse(idToken);
+      return;
+    }
+  }
+  // 否則檢查本地儲存的登入狀態
   const s=localStorage.getItem('ezfun_user');
   if(s){
     currentUser=JSON.parse(s);
