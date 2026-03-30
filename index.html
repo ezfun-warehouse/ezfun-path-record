@@ -874,16 +874,53 @@ window.showReport=function(){
     const row=tableData[v]||{};let total=0;const lines=[];
     channels.forEach(c=>{const val=parseInt(row[c])||0;if(val>0){lines.push(`　📦 ${c}：${val} 單`);total+=val;}});
     if(total===0)return;
-    const msg=`📋 出貨通知｜${dateStr}\n━━━━━━━━━━━━━━\n🏭 廠商：${v}\n🏬 倉庫：${currentWH}\n\n${lines.join('\n')}\n\n✅ 今日處理單數：${total} 單\n━━━━━━━━━━━━━━\n感謝配合，出貨順利！🙏`;
-    html+=`<div class="report-section"><div class="report-label">▶ 廠商：${v}</div><div class="report-box" id="rpt_v_${vi}">${escHtml(msg)}</div><button class="copy-btn" onclick="copyReport('rpt_v_${vi}')">複製此則</button></div>`;
+    html+=`<div class="report-section">
+      <div class="report-label">▶ 廠商：${v}</div>
+      <div style="margin-bottom:6px">
+        <div style="font-size:11px;color:#888;margin-bottom:4px">📝 附註（選填，會帶入回報訊息）</div>
+        <textarea id="note_v_${vi}" rows="2" placeholder="輸入備註細節，例如：部分貨品延誤，預計明日補出..." oninput="refreshVendorReport(${vi})" style="width:100%;padding:8px 10px;border:1px solid #ddd;border-radius:8px;font-size:13px;resize:vertical;font-family:inherit;color:#333;background:#fff;line-height:1.5"></textarea>
+      </div>
+      <div class="report-box" id="rpt_v_${vi}"></div>
+      <button class="copy-btn" onclick="copyReport('rpt_v_${vi}')">複製此則</button>
+    </div>`;
   });
   let whTotal=0,whLines=[],vendorLines=[];
   channels.forEach(c=>{let ct=0;vendors.forEach(v=>{ct+=parseInt((tableData[v]&&tableData[v][c])||0)||0;});if(ct>0){whLines.push(`　📦 ${c}：${ct} 單`);whTotal+=ct;}});
   vendors.forEach(v=>{let vt=0;channels.forEach(c=>{vt+=parseInt((tableData[v]&&tableData[v][c])||0)||0;});if(vt>0)vendorLines.push(`　🏭 ${v}：${vt} 單`);});
   const whMsg=`📊 倉庫日報｜${dateStr}\n━━━━━━━━━━━━━━\n🏬 ${currentWH} 今日出庫總覽\n\n【各通路處理單數】\n${whLines.join('\n')||'　（無出貨）'}\n\n【各廠商處理單數】\n${vendorLines.join('\n')||'　（無出貨）'}\n\n✅ 全倉今日處理單數：${whTotal} 單\n━━━━━━━━━━━━━━`;
-  html+=`<div class="report-section"><div class="report-label">▶ 倉庫總報（回報給公司）</div><div class="report-box" id="rpt_wh">${escHtml(whMsg)}</div><button class="copy-btn" onclick="copyReport('rpt_wh')">複製此則</button></div>`;
+  html+=`<div class="report-section"><div class="report-label">▶ 倉庫總報（回報給公司）</div><div class="report-box" id="rpt_wh"></div><button class="copy-btn" onclick="copyReport('rpt_wh')">複製此則</button></div>`;
   if(!html)html='<div class="empty">今日尚無出貨資料，請先填寫表格並儲存。</div>';
   document.getElementById('report-content').innerHTML=html;
+  // 初始化每個廠商的報表內容
+  const dateStr2=currentDate.replace(/-/g,'/');
+  let vi2=0;
+  vendors.forEach((v)=>{
+    const row=tableData[v]||{};let t=0;channels.forEach(c=>{t+=parseInt(row[c])||0;});
+    if(t===0)return;
+    const box=document.getElementById('rpt_v_'+vi2);
+    if(box)box.textContent=buildVendorMsg(vi2,v,dateStr2);
+    vi2++;
+  });
+  const whBox=document.getElementById('rpt_wh');
+  if(whBox)whBox.textContent=whMsg;
+};
+function buildVendorMsg(vi,v,dateStr){
+  const row=tableData[v]||{};let total=0;const lines=[];
+  channels.forEach(c=>{const val=parseInt(row[c])||0;if(val>0){lines.push(`　📦 ${c}：${val} 單`);total+=val;}});
+  if(total===0)return '';
+  const noteEl=document.getElementById('note_v_'+vi);
+  const note=noteEl?noteEl.value.trim():'';
+  const noteSection=note?`\n\n📝 備註\n　${note.replace(/\n/g,'\n　')}`:'';
+  return `📋 出貨通知｜${dateStr}\n━━━━━━━━━━━━━━\n🏭 廠商：${v}\n🏬 倉庫：${currentWH}\n\n${lines.join('\n')}${noteSection}\n\n✅ 今日處理單數：${total} 單\n━━━━━━━━━━━━━━\n感謝配合，出貨順利！🙏`;
+}
+window.refreshVendorReport=function(vi){
+  const v=vendors.filter((_,i)=>{
+    const row=tableData[_]||{};let t=0;channels.forEach(c=>{t+=parseInt(row[c])||0;});return t>0;
+  })[vi];
+  if(!v)return;
+  const dateStr=currentDate.replace(/-/g,'/');
+  const box=document.getElementById('rpt_v_'+vi);
+  if(box)box.textContent=buildVendorMsg(vi,v,dateStr);
 };
 function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 window.copyReport=function(id){
