@@ -894,15 +894,13 @@ window.showReport=function(){
   const whSection=`<div class="report-section full-width" style="margin-top:4px"><div class="report-label" style="color:#e65100">🏬 倉庫總報（回報給公司）</div><div class="report-box" id="rpt_wh"></div><button class="copy-btn" onclick="copyReport('rpt_wh')" style="background:#fff3e0;color:#e65100;border-color:#ffcc80">複製此則</button></div>`;
   const vendorHtml = html ? `<div class="report-grid">${html}</div>` : '<div class="empty">今日尚無出貨資料，請先填寫表格並儲存。</div>';
   document.getElementById('report-content').innerHTML=vendorHtml+whSection;
-  // 初始化每個廠商的報表內容
+  // 初始化每個廠商的報表內容（用原始 vi 對應 DOM id）
   const dateStr2=currentDate.replace(/-/g,'/');
-  let vi2=0;
-  vendors.forEach((v)=>{
+  vendors.forEach((v,vi)=>{
     const row=tableData[v]||{};let t=0;channels.forEach(c=>{t+=parseInt(row[c])||0;});
     if(t===0)return;
-    const box=document.getElementById('rpt_v_'+vi2);
-    if(box)box.textContent=buildVendorMsg(vi2,v,dateStr2);
-    vi2++;
+    const box=document.getElementById('rpt_v_'+vi);
+    if(box)box.textContent=buildVendorMsg(vi,v,dateStr2);
   });
   const whBox=document.getElementById('rpt_wh');
   if(whBox)whBox.textContent=whMsg;
@@ -917,9 +915,7 @@ function buildVendorMsg(vi,v,dateStr){
   return `📋 出貨通知｜${dateStr}\n━━━━━━━━━━━━━━\n🏭 廠商：${v}\n🏬 倉庫：${currentWH}\n\n${lines.join('\n')}${noteSection}\n\n✅ 今日處理單數：${total} 單\n━━━━━━━━━━━━━━\n感謝配合，出貨順利！🙏`;
 }
 window.refreshVendorReport=function(vi){
-  const v=vendors.filter((_,i)=>{
-    const row=tableData[_]||{};let t=0;channels.forEach(c=>{t+=parseInt(row[c])||0;});return t>0;
-  })[vi];
+  const v=vendors[vi];
   if(!v)return;
   const dateStr=currentDate.replace(/-/g,'/');
   const box=document.getElementById('rpt_v_'+vi);
